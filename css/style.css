@@ -27,6 +27,17 @@
 }
 /*** Spinner End ***/
 
+/*** Margin Start ***/
+.mg {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+/*** Margin End ***/
+
+/*** Center Start ***/
+.ctr {
+    text-align: center;
+}
 
 /*** Button Start ***/
 .btn {

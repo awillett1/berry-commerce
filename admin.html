@@ -1,3 +1,5 @@
+<!-- USER ACCOUNT PAGE (not admin panel....)-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -106,69 +108,66 @@
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
-            <h1 class="text-center text-white display-6">About Us</h1>
+            <h1 class="text-center text-white display-6">User Account</h1>
         </div>
         <!-- Single Page Header End -->
 
 
-        <!-- About Us Start -->
+        <!-- Account Start -->
         <div class="container-fluid testimonial py-5">
-            <h2 class = "ctr">About Us</h2>
-            <p class = "mg">... bla bla bla bla filler text ...</p>
+            <h2 class = "ctr">User Account</h2>
             <div class="container py-5">
-                <div class="testimonial-header text-center">
-                    <h4 class="text-primary",>Our Team</h4>
-
-                    <!-- START BIO...-->
-                </div>
-                    <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                        <div class="position-relative">
-                            <div class="d-flex align-items-center flex-nowrap">
-                                <div class="bg-secondary rounded">
-                                    <img src="img/testimonial-1.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
-                                </div>
-                                <div class="ms-4 d-block">
-                                    <h4 class="text-dark">Name</h4>
-                                    <p class="m-0 pb-3">Year, Role</p>
-                                    <p>... More Information Here ...</p>
-                                </div>
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                      <div class="col-md-8">
+                        <div class="card">
+                          <div class="card-header">
+                            <ul class="nav nav-tabs">
+                              <li class="nav-item">
+                                <a class="nav-link active" id="account-tab" data-bs-toggle="tab" href="#account">Account Information</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="notifications-tab" data-bs-toggle="tab" href="#notifications">Notifications</a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="card-body">
+                            <div class="tab-content">
+                              <div class="tab-pane fade show active" id="account">
+                                <form>
+                                  <!-- Account Information Form -->
+                                  <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </form>
                             </div>
-                            <div class="d-flex justify-content-end pt-3">
-                                <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href="#"><i class="fab fa-linkedin"></i></a>
-                                <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href="#"><i class="fab fa-github"></i></a>
+                            <div class="tab-pane fade" id="notifications">
+                                <h4>Notifications</h4>
+                                <!-- Add content for notifications here -->
+                                <p>Your notification content goes here.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- END BIO...-->
             </div>
         </div>
-
-            <!--BIO AMELIE START-->
-            <div class="container py-5">
-                <div class="testimonial-item img-border-radius bg-light rounded p-4">
-                    <div class="position-relative">
-                        <div class="d-flex align-items-center flex-nowrap">
-                            <div class="bg-secondary rounded">
-                                <img src="img/amelie-headshot.jpg" class="img-fluid rounded" style="width: 100; height: 100px;" alt="">
-                            </div>
-                            <div class="ms-4 d-block">
-                                <h4 class="text-dark"><b>Amelie Willett <i>(she/her)</i></b></h4>
-                                <p class="m-0 pb-3">Junior, <b>Lead Web Developer/Designer</b></p>
-                                    <p>Amelie is a Computer Science major with a Creative Technologies minor at Berry College. She enjoys listening to music, drawing, and coding websites!</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end pt-3">
-                            <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href="https://www.linkedin.com/in/amelie-w-1a1aa2225/"><i class="fab fa-linkedin"></i></a>
-                            <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href="https://github.com/awillett1"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--BIO AMELIE END-->
-
-
-        <!-- About Us End -->
+    </div>
+</div>
+</div>
 
 
         <!-- Footer Start -->
@@ -263,6 +262,7 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>

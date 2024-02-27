@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function handleLogin(event) {
     event.preventDefault(); // Prevent form submission
 
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
+    const email = document.getElementById('floatingInput').value;
+    const password = document.getElementById('floatingPassword').value;
 
     // Sign in user with email/password
     try {
@@ -30,11 +30,10 @@ async function handleLogin(event) {
 
         // Redirect the user to index.html or any other desired page upon successful login
         window.location.href = 'index.html';
-        alert('Login successful! Thank you ', user.email);
+        alert('Login successful! Thank you ' + user.email);
 
     } catch (error) {
         console.error('Error logging in:', error.message);
         // Handle login errors, e.g., display an error message to the user
     }
 }
-        

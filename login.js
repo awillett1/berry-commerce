@@ -28,6 +28,7 @@ function handleLogin(event) {
             console.log('User logged in successfully:', user.email);
 
             window.location.href = 'index.html'
+            alert('Login successful!');
         })
         .catch(error => {
             console.error('Error logging in:', error.message);

@@ -27,6 +27,9 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+
+        <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     </head>
 
     <body>
@@ -123,25 +126,24 @@
                         <h3 class="login-heading mb-4">Welcome to BerryCommerce!</h3>
                         <a href="login.html">Already have an account? Login here.</a>
         
-                        <!-- Sign In Form -->
-                        <form>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email address</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
-                        </div>
-        
-                        <div class="d-grid">
-                            <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Register</button>
-                            <div class="text-center">
-                            <a class="small" href="#">Forgot password?</a> <!--idk if we're gonna keep this or not...-->
-                            </div>
-                        </div>
-        
-                        </form>
+            <!-- Account Creation Form -->
+            <form id="registrationForm">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="registrationEmail" placeholder="name@example.com" required>
+                    <label for="registrationEmail">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="registrationPassword" placeholder="Password" required>
+                    <label for="registrationPassword">Password</label>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-lg btn-primary btn-register text-uppercase fw-bold mb-2" type="submit">Register</button>
+                    <div class="text-center">
+                        <a class="small" href="#">Forgot password?</a>
+                    </div>
+                </div>
+            </form>
+
                     </div>
                     </div>
                 </div>

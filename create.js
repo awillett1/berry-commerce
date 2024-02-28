@@ -37,10 +37,11 @@ async function handleRegistration(event) {
         console.log('User registered successfully:', user.email);
 
         // Store user information in Firestore (adjust the path to match your Firestore structure)
-        await firestore.collection('users').doc('users').collection(user.uid).set({
+        await firestore.collection('users').doc(user.uid).collection('users').add({
             email: user.email,
             role: role,
         });
+
 
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';

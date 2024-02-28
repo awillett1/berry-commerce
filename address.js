@@ -4,7 +4,7 @@ if (!firebase.apps.length) {
     document.addEventListener('DOMContentLoaded', async function () {
         try {
             // Fetch Firebase configuration from the server
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json'');
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
@@ -13,8 +13,11 @@ if (!firebase.apps.length) {
             // Continue with the rest of your code
             const firestore = firebase.firestore();
 
-            // Check if the user is authenticated
-            firebase.auth().onAuthStateChanged(function (user) {
+            // Add click event listener to the user icon
+            const userIcon = document.querySelector('.user-icon');
+            userIcon.addEventListener('click', function () {
+                // Check if the user is authenticated
+                const user = firebase.auth().currentUser;
                 if (user) {
                     // User is signed in, check their role
                     checkUserRole(user.uid, firestore);

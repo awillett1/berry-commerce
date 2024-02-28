@@ -1,22 +1,25 @@
-document.addEventListener('DOMContentLoaded', async function () {
-    // Fetch firebaseConfig from server
-    try {
-        const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-        const firebaseConfig = await response.json();
+if (!firebase.apps.length) {
+    // Fetch firebaseConfig from server and initialize Firebase
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            // Fetch Firebase configuration from the server
+            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            const firebaseConfig = await response.json();
 
-        // Initialize Firebase with the fetched configuration
-        firebase.initializeApp(firebaseConfig);
+            // Initialize Firebase with the fetched configuration
+            firebase.initializeApp(firebaseConfig);
 
-        const firestore = firebase.firestore();
+            // Continue with the rest of your code
+            const firestore = firebase.firestore();
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLogin);
 
-        // Attach event listener to the login form
-        const loginForm = document.getElementById('loginForm');
-        loginForm.addEventListener('submit', handleLogin);
-
-    } catch (error) {
-        console.error('Error fetching firebaseConfig:', error);
-    }
-});
+        } catch (error) {
+            console.error('Error fetching or initializing Firebase:', error);
+            // Handle errors, e.g., prevent further execution or show an error message
+        }
+    });
+}
 
 async function handleLogin(event) {
     event.preventDefault(); // Prevent form submission

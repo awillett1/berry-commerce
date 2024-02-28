@@ -1,22 +1,27 @@
-        document.addEventListener('DOMContentLoaded', async function () {
-        // Fetch firebaseConfig from server
+// Check if Firebase app has already been initialized
+if (!firebase.apps.length) {
+    // Fetch firebaseConfig from server and initialize Firebase
+    document.addEventListener('DOMContentLoaded', async function () {
         try {
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            // Fetch Firebase configuration from the server
+            const response = await fetch('link');
             const firebaseConfig = await response.json();
-    
+
             // Initialize Firebase with the fetched configuration
             firebase.initializeApp(firebaseConfig);
 
+            // Continue with the rest of your code
             const firestore = firebase.firestore();
-    
-            // Attach event listener to the registration form
             const registrationForm = document.getElementById('registrationForm');
             registrationForm.addEventListener('submit', handleRegistration);
-    
+
         } catch (error) {
-            console.error('Error fetching firebaseConfig:', error);
+            console.error('Error fetching or initializing Firebase:', error);
+            // Handle errors, e.g., prevent further execution or show an error message
         }
     });
+}
+
     
     async function handleRegistration(event) {
         event.preventDefault(); // Prevent form submission

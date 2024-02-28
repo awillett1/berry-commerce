@@ -4,7 +4,7 @@ if (!firebase.apps.length) {
     document.addEventListener('DOMContentLoaded', async function () {
         try {
             // Fetch Firebase configuration from the server
-            const response = await fetch('link');
+            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration

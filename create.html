@@ -120,43 +120,57 @@
             <h1 class="text-center text-white display-6">Create Account</h1>
         </div>
         <!-- Single Page Header End -->
-            <h3 class="login-heading mb-4">Welcome to BerryCommerce!</h3>
-             <!-- Role Selection Form -->
-             <form id="roleSelectionForm">
-                <div class="mb-3">
-                 <label class="form-label">What do you plan on using BerryCommerce for?</label>
-                 </div>
-                <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="role" id="userRadio" value="user" checked>
-                 <label class="form-check-label" for="userRadio">Buying Products</label>
-               </div>
-               <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="role" id="sellerRadio" value="seller">
-                     <label class="form-check-label" for="sellerRadio">Selling Products</label>
-                   </div>
-                <div class="mt-3">
-                    <button type="button" class="btn btn-primary" onclick="showRegistrationForm()">Next</button>
-                </div>
-             </form>
-
-        <!-- Role Selection End -->
-
-        <!-- Create Start -->
-        <div class="container-fluid ps-md-0" id="registrationSection" style="display: none;">
+     
+        <!-- Role Selection Start -->
+        <div class="container-fluid ps-md-0" id="roleSelectionSection" class="bg-image">
             <div class="row g-0">
-                <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+                <div class="d-none d-md-flex col-md-4 col-lg-6 mb-0 bg-image"></div>
                 <div class="col-md-8 col-lg-6">
                     <div class="login d-flex align-items-center py-5">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-9 col-lg-8 mx-auto">
                                     <h3 class="login-heading mb-4">Welcome to BerryCommerce!</h3>
+                                    <!--- Role Selection Form -->
+                                    <form id="roleSelectionForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">What do you plan on using BerryCommerce for?</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="role" id="userRadio" value="user" checked>
+                                            <label class="form-check-label" for="userRadio">Buying Products</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="role" id="sellerRadio" value="seller">
+                                            <label class="form-check-label" for="sellerRadio">Selling Products</label>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-primary" onclick="showRegistrationForm()">Next</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Role Selection End -->
+
+        <!-- Create Start -->
+        <div class="container-fluid ps-md-0" id="registrationSection" style="display: none">
+            <div class="row g-0">
+                <div class="d-none d-md-flex col-md-4 col-lg-6"></div>
+                <div class="col-md-8 col-lg-6">
+                    <div class="login d-flex align-items-center">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9 col-lg-8 mx-auto">
                                     <a href="login.html">Already have an account? Login here.</a>
                                     <!-- Account Creation Form -->
                                     <form id="registrationForm">
                                         <!-- Add a hidden input field to store the user's role -->
                                         <input type="hidden" id="userRole" name="userRole" value="user">
-
                                         <div class="form-floating mb-3">
                                             <input type="email" class="form-control" id="registrationEmail" placeholder="name@example.com" required>
                                             <label for="registrationEmail">Email address</label>
@@ -180,7 +194,6 @@
             </div>
         </div>
         <!-- Create End -->
-
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">

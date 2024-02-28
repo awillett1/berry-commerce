@@ -35,11 +35,13 @@ async function handleLogin(event) {
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
 
-        // Fetch user data from Firestore
-        const userDoc = await firestore.collection('users').doc(user.uid).get();
+        // Fetch user data from Firestore (adjust the path to match your Firestore structure)
+        const userDoc = await firestore.collection('users').doc('users').collection(user.uid).get();
 
-        if (userDoc.exists) {
-            const userRole = userDoc.data().role;
+        if (userDoc.docs.length > 0) {
+            // Assuming there is at least one document in the collection
+            const userData = userDoc.docs[0].data();
+            const userRole = userData.role;
 
             // Redirect based on user role
             if (userRole === 'user') {

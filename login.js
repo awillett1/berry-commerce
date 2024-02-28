@@ -34,7 +34,7 @@ async function handleLogin(event) {
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
 
-        alert("Thank you for logging in, ", user.email);
+      
 
         // Fetch user data from Firestore (adjust the path to match your Firestore structure)
         /* const userDoc = await firestore.collection('users').doc('users').collection(user.uid).get();
@@ -61,6 +61,10 @@ async function handleLogin(event) {
             // Redirect to a default page or handle as needed
             window.location.href = '404.html';
         } */
+
+        // Redirect the user to index.html or any other desired page upon successful registration
+        window.location.href = 'index.html';
+        alert('Login successful!', user.email);
 
     } catch (error) {
         console.error('Error logging in:', error.message);

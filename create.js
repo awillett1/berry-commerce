@@ -11,7 +11,6 @@ if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
-            const firestore = firebase.firestore();
             const registrationForm = document.getElementById('registrationForm');
             registrationForm.addEventListener('submit', handleRegistration);
 
@@ -24,6 +23,8 @@ if (!firebase.apps.length) {
 
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
+
+    const firestore = firebase.firestore();
 
     const email = document.getElementById('registrationEmail').value;
     const password = document.getElementById('registrationPassword').value;

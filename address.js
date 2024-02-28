@@ -1,5 +1,3 @@
-
-
 // Fetch firebaseConfig from server and initialize Firebase
 document.addEventListener('DOMContentLoaded', async function () {
     try {

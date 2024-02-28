@@ -1,4 +1,4 @@
-    document.addEventListener('DOMContentLoaded', async function () {
+        document.addEventListener('DOMContentLoaded', async function () {
         // Fetch firebaseConfig from server
         try {
             const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');

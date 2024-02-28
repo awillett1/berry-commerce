@@ -34,6 +34,8 @@ async function handleLogin(event) {
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
 
+        alert("Thank you for logging in, ", user.email);
+
         // Fetch user data from Firestore (adjust the path to match your Firestore structure)
         /* const userDoc = await firestore.collection('users').doc('users').collection(user.uid).get();
 

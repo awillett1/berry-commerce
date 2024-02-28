@@ -21,12 +21,12 @@ if (!firebase.apps.length) {
 }
 
 async function handleLogin(event) {
-    const firestore = firebase.firestore();
+    // const firestore = firebase.firestore();
     event.preventDefault(); // Prevent form submission
 
     const email = document.getElementById('floatingInput').value;
     const password = document.getElementById('floatingPassword').value;
-    const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
+   //  const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
 
     try {
         // Sign in user with email/password
@@ -35,7 +35,7 @@ async function handleLogin(event) {
         console.log('User logged in successfully:', user.email);
 
         // Fetch user data from Firestore (adjust the path to match your Firestore structure)
-        const userDoc = await firestore.collection('users').doc('users').collection(user.uid).get();
+        /* const userDoc = await firestore.collection('users').doc('users').collection(user.uid).get();
 
         if (userDoc.docs.length > 0) {
             // Assuming there is at least one document in the collection
@@ -58,7 +58,7 @@ async function handleLogin(event) {
             alert('User data not found. Please contact support.');
             // Redirect to a default page or handle as needed
             window.location.href = '404.html';
-        }
+        } */
 
     } catch (error) {
         console.error('Error logging in:', error.message);

@@ -1,3 +1,4 @@
+// Check if Firebase app has already been initialized
 if (!firebase.apps.length) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
@@ -26,16 +27,37 @@ async function handleLogin(event) {
 
     const email = document.getElementById('floatingInput').value;
     const password = document.getElementById('floatingPassword').value;
+    const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
 
-    // Sign in user with email/password
     try {
+        // Sign in user with email/password
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
 
-        // Redirect the user to index.html or any other desired page upon successful login
-        window.location.href = 'index.html';
-        alert('Login successful! Thank you ' + user.email);
+        // Fetch user data from Firestore
+        const userDoc = await firestore.collection('users').doc(user.uid).get();
+
+        if (userDoc.exists) {
+            const userRole = userDoc.data().role;
+
+            // Redirect based on user role
+            if (userRole === 'user') {
+                window.location.href = 'account.html';
+            } else if (userRole === 'seller') {
+                window.location.href = 'seller.html';
+            } else {
+                // Handle unexpected role (optional)
+                alert('Invalid role. Please contact support.');
+                // Redirect to a default page or handle as needed
+                window.location.href = '404.html';
+            }
+        } else {
+            // Handle user data not found (optional)
+            alert('User data not found. Please contact support.');
+            // Redirect to a default page or handle as needed
+            window.location.href = '404.html';
+        }
 
     } catch (error) {
         console.error('Error logging in:', error.message);

@@ -10,8 +10,6 @@ if (!firebase.apps.length) {
             // Initialize Firebase with the fetched configuration
             firebase.initializeApp(firebaseConfig);
 
-            // Continue with the rest of your code
-            const firestore = firebase.firestore();
             const loginForm = document.getElementById('loginForm');
             loginForm.addEventListener('submit', handleLogin);
 
@@ -23,6 +21,7 @@ if (!firebase.apps.length) {
 }
 
 async function handleLogin(event) {
+    const firestore = firebase.firestore();
     event.preventDefault(); // Prevent form submission
 
     const email = document.getElementById('floatingInput').value;

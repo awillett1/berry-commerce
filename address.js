@@ -4,7 +4,7 @@ if (!firebase.apps.length) {
     document.addEventListener('DOMContentLoaded', async function () {
         try {
             // Fetch Firebase configuration from the server
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            const response = await fetch('link');
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
@@ -12,14 +12,12 @@ if (!firebase.apps.length) {
 
             // Continue with the rest of your code
             const firestore = firebase.firestore();
-            const loginForm = document.getElementById('loginForm');
-            loginForm.addEventListener('submit', handleLogin);
 
             // Check if the user is authenticated
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
                     // User is signed in, check their role
-                    checkUserRole(user.uid);
+                    checkUserRole(user.uid, firestore);
                 } else {
                     // User is not signed in, redirect to login page or handle as needed
                     window.location.href = 'login.html';
@@ -33,10 +31,10 @@ if (!firebase.apps.length) {
     });
 }
 
-async function checkUserRole(userId) {
+async function checkUserRole(userId, firestore) {
     try {
         // Fetch user data from Firestore
-        const userDoc = await firebase.firestore().collection('users').doc(userId).get();
+        const userDoc = await firestore.collection('users').doc(userId).get();
         if (userDoc.exists) {
             const userRole = userDoc.data().role;
 

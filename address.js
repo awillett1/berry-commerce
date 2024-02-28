@@ -1,4 +1,4 @@
-// Check if Firebase app has already been initialized
+/* // Check if Firebase app has already been initialized
 if (!firebase.apps.length) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
@@ -67,3 +67,4 @@ async function checkUserRole(userId, firestore) {
         window.location.href = '404.html';
     }
 }
+ */

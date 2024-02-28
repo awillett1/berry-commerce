@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Initialize Firebase with the fetched configuration
         firebase.initializeApp(firebaseConfig);
 
+        const firestore = firebase.firestore();
+
         // Attach event listener to the login form
         const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', handleLogin);

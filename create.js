@@ -6,6 +6,8 @@
     
             // Initialize Firebase with the fetched configuration
             firebase.initializeApp(firebaseConfig);
+
+            const firestore = firebase.firestore();
     
             // Attach event listener to the registration form
             const registrationForm = document.getElementById('registrationForm');
@@ -21,12 +23,19 @@
     
         const email = document.getElementById('registrationEmail').value;
         const password = document.getElementById('registrationPassword').value;
+        const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
     
-        // Create a new user with email/password
         try {
+            // Create a new user with email/password
             const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
             const user = userCredential.user;
             console.log('User registered successfully:', user.email);
+    
+            // Store user information in Firestore
+            await firebase.firestore().collection('users').doc(user.uid).set({
+                email: user.email,
+                role: role,
+            });
     
             // Redirect the user to index.html or any other desired page upon successful registration
             window.location.href = 'index.html';
@@ -34,8 +43,7 @@
     
         } catch (error) {
             console.error('Error registering user:', error.message);
-            // Handle registration errors, e.g., display an error message to the user
-
+            
             // Check if the error is due to an existing email address
             if (error.code === 'auth/email-already-in-use') {
                 alert('This email address is already in use. Please use a different email or log in.');
@@ -45,3 +53,6 @@
             }
         }
     }
+    
+
+    

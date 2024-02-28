@@ -35,5 +35,13 @@
         } catch (error) {
             console.error('Error registering user:', error.message);
             // Handle registration errors, e.g., display an error message to the user
+
+            // Check if the error is due to an existing email address
+            if (error.code === 'auth/email-already-in-use') {
+                alert('This email address is already in use. Please use a different email or log in.');
+            } else {
+                // Handle other registration errors
+                alert('Registration failed. Please try again.');
+            }
         }
     }

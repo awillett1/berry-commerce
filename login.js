@@ -34,6 +34,15 @@ async function handleLogin(event) {
 
     } catch (error) {
         console.error('Error logging in:', error.message);
-        // Handle login errors, e.g., display an error message to the user
+
+        // Check for specific error codes
+        if (error.code === 'auth/user-not-found') {
+            alert('User not found. Please check your email or sign up for a new account.');
+        } else if (error.code === 'auth/wrong-password') {
+            alert('Incorrect password. Please try again.');
+        } else {
+            // Handle other login errors
+            alert('Login failed. Please try again.');
+        }
     }
 }

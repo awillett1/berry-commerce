@@ -1,3 +1,4 @@
+/*
 let firebaseInstance; // Declare as global var
 
 // Check if Firebase app has already been initialized
@@ -60,3 +61,54 @@ function checkLoginAndRedirect() {
         }
     });
 }
+*/
+// address.js
+
+// Function to handle the click event on the user icon
+function handleUserIconClick(event) {
+    event.preventDefault();
+    checkLoginAndRedirect();
+}
+
+// Function to check login status and redirect accordingly
+async function checkLoginAndRedirect() {
+    try {
+        // Get the current user
+        const user = firebase.auth().currentUser;
+
+        if (user) {
+            // User is signed in
+            const firestore = firebase.firestore();
+            const userRef = firestore.collection('users').doc(user.uid);
+
+            // Get user data from Firestore
+            const userDoc = await userRef.get();
+
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                const userRole = userData.role;
+
+                // Redirect to appropriate page based on user role
+                if (userRole === 'user') {
+                    window.location.href = 'account.html';
+                } else if (userRole === 'seller') {
+                    window.location.href = 'seller.html';
+                }
+            } else {
+                console.log('No user data found!');
+                // Handle case where user data does not exist
+            }
+        } else {
+            // No user is signed in
+            window.location.href = 'login.html';
+        }
+    } catch (error) {
+        console.error('Error checking login status:', error);
+        // Handle errors, e.g., prevent further execution or show an error message
+    }
+}
+
+// Add event listener to the user icon
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('userIcon').addEventListener('click', handleUserIconClick);
+});

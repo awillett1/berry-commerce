@@ -1,4 +1,5 @@
 // Check if Firebase app has already been initialized
+/*
 if (!firebaseInstance) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
@@ -19,6 +20,13 @@ if (!firebaseInstance) {
         }
     });
 }
+*/
+
+// Assume Firebase has been initialized elsewhere
+document.addEventListener('DOMContentLoaded', async function () {
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', handleLogin);
+});
 
 async function handleLogin(event) {
     event.preventDefault(); // Prevent form submission

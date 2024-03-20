@@ -62,7 +62,8 @@ function checkLoginAndRedirect() {
     });
 }
 */
-// address.js
+
+// address.js 
 
 // Function to handle the click event on the user icon
 function handleUserIconClick(event) {
@@ -72,6 +73,9 @@ function handleUserIconClick(event) {
 
 async function checkLoginAndRedirect() {
     try {
+        // Wait for Firebase to be initialized
+        await firebase.auth().waitForSignInState();
+
         // Get the current user
         const user = firebase.auth().currentUser;
 

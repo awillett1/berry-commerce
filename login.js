@@ -34,33 +34,6 @@ async function handleLogin(event) {
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
 
-      
-
-        // Fetch user data from Firestore (adjust the path to match your Firestore structure)
-        /* const userDoc = await firestore.collection('users').doc('users').collection(user.uid).get();
-
-        if (userDoc.docs.length > 0) {
-            // Assuming there is at least one document in the collection
-            const userData = userDoc.docs[0].data();
-            const userRole = userData.role;
-
-            // Redirect based on user role
-            if (userRole === 'user') {
-                window.location.href = 'account.html';
-            } else if (userRole === 'seller') {
-                window.location.href = 'seller.html';
-            } else {
-                // Handle unexpected role (optional)
-                alert('Invalid role. Please contact support.');
-                // Redirect to a default page or handle as needed
-                window.location.href = '404.html';
-            }
-        } else {
-            // Handle user data not found (optional)
-            alert('User data not found. Please contact support.');
-            // Redirect to a default page or handle as needed
-            window.location.href = '404.html';
-        } */
 
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';

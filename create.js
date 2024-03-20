@@ -37,11 +37,11 @@ async function handleRegistration(event) {
         const user = userCredential.user;
         console.log('User registered successfully:', user.email);
 
-        // Get a reference to the Realtime Database
-        const database = firebaseInstance.database();
+        // Get a reference to the Firestore database
+        const firestore = firebaseInstance.firestore();
 
-        // Store user information in Firebase Realtime Database under the "users" node
-        await database.ref('users/' + user.uid).set({
+        // Store user information in Firestore under the "users" collection
+        await firestore.collection('users').doc(user.uid).set({
             email: email,
             role: role
         });

@@ -1,24 +1,28 @@
-let firebaseInstance; // Declare firebaseInstance globally
-// Check if Firebase app has already been initialized
-if (!firebaseInstance.apps.length) {
-    // Fetch firebaseConfig from server and initialize Firebase
-    document.addEventListener('DOMContentLoaded', async function () {
-        try {
-            // Fetch Firebase configuration from the server
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-            const firebaseConfig = await response.json();
+// Check if firebaseInstance is already declared
+if (!window.firebaseInstance) {
+    // Declare firebaseInstance if not already defined
+    let firebaseInstance;
 
-            // Initialize Firebase with the fetched configuration
-            firebaseInstance.initializeApp(firebaseConfig);
+    if (!firebaseInstance || !firebaseInstance.apps.length) {
+        // Fetch firebaseConfig from server and initialize Firebase
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // Fetch Firebase configuration from the server
+                const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+                const firebaseConfig = await response.json();
 
-            // Continue with the rest of your code
-            addEventListeners();
+                // Initialize Firebase with the fetched configuration
+                firebaseInstance.initializeApp(firebaseConfig);
 
-        } catch (error) {
-            console.error('Error fetching or initializing Firebase:', error);
-            // Handle errors, e.g., prevent further execution or show an error message
-        }
-    });
+                // Continue with the rest of your code
+                addEventListeners();
+
+            } catch (error) {
+                console.error('Error fetching or initializing Firebase:', error);
+                // Handle errors, e.g., prevent further execution or show an error message
+            }
+        });
+    }
 }
 
 function addEventListeners() {

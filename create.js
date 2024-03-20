@@ -1,26 +1,29 @@
-// Initialize Firebase and store the instance in a global variable
-let firebaseInstance;
+// Check if firebaseInstance is already declared
+if (!window.firebaseInstance) {
+    // Declare firebaseInstance if not already defined
+    let firebaseInstance;
 
-// Check if Firebase app has already been initialized
-if (!firebaseInstance) {
-    // Fetch firebaseConfig from server and initialize Firebase
-    document.addEventListener('DOMContentLoaded', async function () {
-        try {
-            // Fetch Firebase configuration from the server
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-            const firebaseConfig = await response.json();
+    // Check if Firebase app has already been initialized
+    if (!firebaseInstance || !firebaseInstance.apps.length) {
+        // Fetch firebaseConfig from server and initialize Firebase
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // Fetch Firebase configuration from the server
+                const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+                const firebaseConfig = await response.json();
 
-            // Initialize Firebase with the fetched configuration
-            firebaseInstance = firebase.initializeApp(firebaseConfig);
+                // Initialize Firebase with the fetched configuration
+                firebaseInstance = firebase.initializeApp(firebaseConfig);
 
-            // Continue with the rest of your code
-            addEventListeners();
+                // Continue with the rest of your code
+                addEventListeners();
 
-        } catch (error) {
-            console.error('Error fetching or initializing Firebase:', error);
-            // Handle errors, e.g., prevent further execution or show an error message
-        }
-    });
+            } catch (error) {
+                console.error('Error fetching or initializing Firebase:', error);
+                // Handle errors, e.g., prevent further execution or show an error message
+            }
+        });
+    }
 }
 
 function addEventListeners() {

@@ -1,25 +1,29 @@
-let firebaseInstance; // Declare firebaseInstance globally
-// Check if Firebase app has already been initialized
-if (!firebaseInstance) {
-    // Fetch firebaseConfig from server and initialize Firebase
-    document.addEventListener('DOMContentLoaded', async function () {
-        try {
-            // Fetch Firebase configuration from the server
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-            const firebaseConfig = await response.json();
+// Check if firebaseInstance is already declared
+if (!window.firebaseInstance) {
+    // Declare firebaseInstance if not already defined
+    let firebaseInstance;
 
-            // Initialize Firebase with the fetched configuration
-            firebaseInstance = firebase.initializeApp(firebaseConfig);
+    if (!firebaseInstance || !firebaseInstance.apps.length) {
+        // Fetch firebaseConfig from server and initialize Firebase
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // Fetch Firebase configuration from the server
+                const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+                const firebaseConfig = await response.json();
 
-            // Continue with the rest of your code
-            const loginForm = document.getElementById('loginForm');
-            loginForm.addEventListener('submit', handleLogin);
+                // Initialize Firebase with the fetched configuration
+                firebaseInstance = firebase.initializeApp(firebaseConfig);
 
-        } catch (error) {
-            console.error('Error fetching or initializing Firebase:', error);
-            // Handle errors, e.g., prevent further execution or show an error message
-        }
-    });
+                // Continue with the rest of your code
+                const loginForm = document.getElementById('loginForm');
+                loginForm.addEventListener('submit', handleLogin);
+
+            } catch (error) {
+                console.error('Error fetching or initializing Firebase:', error);
+                // Handle errors, e.g., prevent further execution or show an error message
+            }
+        });
+    }
 }
 
 async function handleLogin(event) {

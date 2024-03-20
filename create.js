@@ -40,7 +40,7 @@ async function handleRegistration(event) {
         // Get a reference to the Realtime Database
         const database = firebaseInstance.database();
 
-        // Store user information in Firebase Realtime Database
+        // Store user information in Firebase Realtime Database under the "users" node
         await database.ref('users/' + user.uid).set({
             email: email,
             role: role
@@ -63,6 +63,7 @@ async function handleRegistration(event) {
         }
     }
 }
+
 
 function showRegistrationForm() {
     // Toggle the display of the registration section

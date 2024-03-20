@@ -168,6 +168,7 @@
                     <div class="row">
                         <div class="col-md-9 col-lg-8 mx-auto">
                             <a href="login.html">Already have an account? Login here.</a>
+                            <p>All Seller accounts must be preapproved by Berry Commerce! (See form under User account for details.) </p>
                             <!-- Account Creation Form -->
                             <form id="registrationForm">
                                 <!-- Add a hidden input field to store the user's role -->
@@ -179,6 +180,10 @@
                                 <div class="form-floating mb-3">
                                     <input type="password" class="form-control" id="registrationPassword" placeholder="Password" required>
                                     <label for="registrationPassword">Password</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="verificationCode" placeholder="Enter 6-digit code" required>
+                                    <label for="verificationCode">Verification Code</label>
                                 </div>
                                 <div class="d-grid">
                                     <button class="btn btn-lg btn-primary btn-register text-uppercase fw-bold mb-2" type="submit">Register</button>

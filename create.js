@@ -69,26 +69,8 @@ function showRegistrationForm() {
 }
 */
 
-/// Wait for Firebase to be initialized before executing code
-document.addEventListener('DOMContentLoaded', async function () {
-    try {
-        // Fetch Firebase configuration from the server
-        const response = await fetch('x');
-        const firebaseConfig = await response.json();
 
-        // Initialize Firebase with the fetched configuration
-        firebase.initializeApp(firebaseConfig);
-
-        // Continue with the rest of your code
-        const registrationForm = document.getElementById('registrationForm');
-        registrationForm.addEventListener('submit', handleRegistration);
-
-    } catch (error) {
-        console.error('Error fetching or initializing Firebase:', error);
-        // Handle errors, e.g., prevent further execution or show an error message
-    }
-});
-
+/* // MARCH 20 - WORKS BUT NO VERIFICATION CODE
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
 
@@ -130,6 +112,52 @@ async function handleRegistration(event) {
 }
 
 function showRegistrationForm() {
+    // Toggle the display of the registration section
+    document.getElementById('roleSelectionForm').style.display = 'none';
+    document.getElementById('registrationSection').style.display = 'block';
+}
+*/
+
+async function handleRegistration(event) {
+    event.preventDefault(); // Prevent form submission
+  
+    const verificationCode = document.getElementById('verificationCode').value;
+  
+    try {
+      // Check if the verification code exists in the database
+      const verificationCodeRef = firebase.firestore().collection('verificationCodes').doc(verificationCode);
+      const doc = await verificationCodeRef.get();
+  
+      if (doc.exists) {
+        // Verification code exists, proceed with account creation
+        const email = document.getElementById('registrationEmail').value;
+        const password = document.getElementById('registrationPassword').value;
+  
+        // Create the account using Firebase Authentication
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+  
+        // Save user information and verification code in Firestore under 'sellers' collection
+        const userData = {
+          email: email,
+          verificationCode: verificationCode // Save verification code
+        };
+        await firebase.firestore().collection('sellers').doc(user.uid).set(userData);
+  
+        // Account created successfully, redirect to a success page or do something else
+        console.log('Account created successfully!');
+      } else {
+        // Verification code does not exist, prevent account creation
+        console.log('Invalid verification code. Account not created.');
+      }
+    } catch (error) {
+      // Handle errors
+      console.error('Error during registration:', error);
+      // You can show an error message to the user here
+    }
+  }
+  
+  function showRegistrationForm() {
     // Toggle the display of the registration section
     document.getElementById('roleSelectionForm').style.display = 'none';
     document.getElementById('registrationSection').style.display = 'block';

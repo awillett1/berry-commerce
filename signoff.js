@@ -105,7 +105,7 @@ async function handleSignOut() {
     firebase.auth().signOut().then(function() {
         // Sign-out successful, redirect to login page
         window.location.href = 'login.html';
-        // Since userRole and userEmail are not accessible here, remove them from the alert
+
         alert('You have successfully signed out.');
     }).catch(function(error) {
         // An error happened

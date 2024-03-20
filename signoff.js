@@ -26,6 +26,12 @@ function addEventListeners() {
     document.getElementById('signOutButton').addEventListener('click', async function() {
         // Fetch user's data from Firestore
         const user = firebaseInstance.auth().currentUser;
+
+        if (!user) {
+            console.log('No user is signed in.');
+            return; // Exit the function if no user is signed in
+        }
+
         const firestore = firebaseInstance.firestore();
         const userRef = firestore.collection('users').doc(user.uid);
 
@@ -46,10 +52,11 @@ function addEventListeners() {
         }
 
         // Sign out the user
-        firebase.auth().signOut().then(function() {
+        firebaseInstance.auth().signOut().then(function() {
             // Sign-out successful, redirect to login page
             window.location.href = 'login.html';
-            alert(`You have selectly signed out of your ${userRole} account, ${userEmail}`);
+            // Since userRole and userEmail are not accessible here, remove them from the alert
+            alert('You have successfully signed out.');
         }).catch(function(error) {
             // An error happened
             console.error('Error signing out:', error);

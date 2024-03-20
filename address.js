@@ -110,3 +110,8 @@ async function checkLoginAndRedirect() {
         // Handle errors, e.g., prevent further execution or show an error message
     }
 }
+
+// Add event listener to the user icon
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('userIcon').addEventListener('click', handleUserIconClick);
+});

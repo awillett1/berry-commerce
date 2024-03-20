@@ -1,5 +1,7 @@
+let firebase; // global var
+
 // Check if Firebase app has already been initialized
-if (!firebase.apps.length) {
+if (!firebase) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -8,7 +10,7 @@ if (!firebase.apps.length) {
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
-            firebase.initializeApp(firebaseConfig);
+            firebase = firebase.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
             const registrationForm = document.getElementById('registrationForm');
@@ -55,6 +57,7 @@ async function handleRegistration(event) {
             // Handle other registration errors
             alert('Registration failed. Please try again.');
         }
+
     }
 }
 

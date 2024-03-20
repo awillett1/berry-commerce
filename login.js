@@ -1,3 +1,29 @@
+// Declare firebase variable globally
+let firebaseInstance;
+
+// Check if Firebase app has already been initialized
+if (!firebaseInstance) {
+    // Fetch firebaseConfig from server and initialize Firebase
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            // Fetch Firebase configuration from the server
+            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            const firebaseConfig = await response.json();
+
+            // Initialize Firebase with the fetched configuration
+            firebaseInstance = firebase.initializeApp(firebaseConfig);
+
+            // Continue with the rest of your code
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLogin);
+
+        } catch (error) {
+            console.error('Error fetching or initializing Firebase:', error);
+            // Handle errors, e.g., prevent further execution or show an error message
+        }
+    });
+}
+
 async function handleLogin(event) {
     event.preventDefault(); // Prevent form submission
 

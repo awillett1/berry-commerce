@@ -1,6 +1,6 @@
 
 // Check if Firebase app has already been initialized
-if (!firebase.apps.length) {
+if (!firebaseInstance) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -9,7 +9,7 @@ if (!firebase.apps.length) {
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
-            firebase.initializeApp(firebaseConfig);
+            firebaseInstance = firebase.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
             addEventListeners();
@@ -25,8 +25,8 @@ function addEventListeners() {
     // Add event listener for sign-out button
     document.getElementById('signOutButton').addEventListener('click', async function() {
         // Fetch user's data from Firestore
-        const user = firebase.auth().currentUser;
-        const firestore = firebase.firestore();
+        const user = firebaseInstance.auth().currentUser;
+        const firestore = firebaseInstance.firestore();
         const userRef = firestore.collection('users').doc(user.uid);
 
         try {
@@ -39,10 +39,10 @@ function addEventListeners() {
                 // Display user's email and role in alert
                 //alert(`You are signed in as ${userEmail} with the role ${userRole}.`);
             } else {
-                console.log('No such document!');
+                console.log('No such user data!');
             }
         } catch (error) {
-            console.log('Error getting document:', error);
+            console.log('Error getting user data:', error);
         }
 
         // Sign out the user

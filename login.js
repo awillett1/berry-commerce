@@ -1,65 +1,47 @@
-// Declare firebase variable globally
-let firebaseInstance;
-
-// Check if Firebase app has already been initialized
-if (!firebaseInstance) {
-    // Fetch firebaseConfig from server and initialize Firebase
-    document.addEventListener('DOMContentLoaded', async function () {
-        try {
-            // Fetch Firebase configuration from the server
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-            const firebaseConfig = await response.json();
-
-            // Initialize Firebase with the fetched configuration
-            firebaseInstance = firebase.initializeApp(firebaseConfig);
-
-            // Continue with the rest of your code
-            const registrationForm = document.getElementById('registrationForm');
-            registrationForm.addEventListener('submit', handleRegistration);
-
-        } catch (error) {
-            console.error('Error fetching or initializing Firebase:', error);
-            // Handle errors, e.g., prevent further execution or show an error message
-        }
-    });
-}
-
-async function handleRegistration(event) {
+async function handleLogin(event) {
     event.preventDefault(); // Prevent form submission
 
-    const email = document.getElementById('registrationEmail').value;
-    const password = document.getElementById('registrationPassword').value;
-    const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
+    const email = document.getElementById('floatingInput').value;
+    const password = document.getElementById('floatingPassword').value;
+    const selectedRole = document.querySelector('input[name="role"]:checked').value; // Get the selected role from the login form
 
     try {
-        // Create a new user with email/password
-        const userCredential = await firebaseInstance.auth().createUserWithEmailAndPassword(email, password);
+        // Sign in user with email/password
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
-        console.log('User registered successfully:', user.email);
+        console.log('User logged in successfully:', user.email);
 
         // Get a reference to the Firestore database
-        const firestore = firebaseInstance.firestore();
+        const firestore = firebase.firestore();
 
-        // Store user information in Firestore under the "users" collection
-        await firestore.collection('users').doc(user.uid).set({
-            email: email,
-            role: role
-        });
+        // Fetch user data from Firestore
+        const userDoc = await firestore.collection('users').doc(user.uid).get();
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            const userRole = userData.role;
 
-        // Redirect the user to index.html or any other desired page upon successful registration
-        window.location.href = 'index.html';
-        alert('Registration successful! You can now log in with your new account.');
-        alert('Selected Role: ' + role);
-
-    } catch (error) {
-        console.error('Error registering user:', error.message);
-
-        // Check if the error is due to an existing email address
-        if (error.code === 'auth/email-already-in-use') {
-            alert('This email address is already in use. Please use a different email or log in.');
+            // Check if user role matches the selected role in the login form
+            if (userRole === selectedRole) {
+                // Redirect the user to index.html or any other desired page upon successful login
+                window.location.href = 'index.html';
+                alert('Login successful!');
+            } else {
+                alert('You do not have permission to access this account. Please log in with the correct role.');
+            }
         } else {
-            // Handle other registration errors
-            alert('Registration failed. Please try again.');
+            alert('User data not found. Please sign up for an account.');
+        }
+    } catch (error) {
+        console.error('Error logging in:', error.message);
+
+        // Check for specific error codes
+        if (error.code === 'auth/user-not-found') {
+            alert('User not found. Please check your email or sign up for a new account.');
+        } else if (error.code === 'auth/wrong-password') {
+            alert('Incorrect password. Please try again.');
+        } else {
+            // Handle other login errors
+            alert('Login failed. Please try again.');
         }
     }
 }

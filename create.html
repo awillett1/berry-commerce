@@ -34,6 +34,7 @@
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
         
         <script src="create.js"></script> <!-- Handle account creation information (securely store) -->
+        <script src="address.js"></script> <!-- Checks whether user is logged in or not... -->
 
 
     </head>
@@ -81,8 +82,8 @@
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
-                            <!-- if logged in already, go to account. otherwise go to login. -->
-                            <a href="login.html" class="my-auto user-icon">
+                             <!-- address.js handles this -->
+                             <a href="#" class="my-auto user-icon" id="userIcon">
                                 <i class="fas fa-user fa-2x"></i>
                             </a>
                         </div>

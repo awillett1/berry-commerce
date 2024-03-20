@@ -36,6 +36,7 @@ async function handleLogin(event) {
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
+        console.log('Selected Role: ', selectedRole);
 
         // Get a reference to the Firestore database
         const firestore = firebase.firestore();
@@ -45,6 +46,8 @@ async function handleLogin(event) {
         if (userDoc.exists) {
             const userData = userDoc.data();
             const userRole = userData.role;
+
+            console.log('Actual Role: ', userRole);
 
             // Check if user role matches the selected role in the login form
             if (userRole === selectedRole) {

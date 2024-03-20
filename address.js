@@ -1,6 +1,3 @@
-// Declare firebase variable globally
-let firebaseInstance;
-
 // Check if Firebase app has already been initialized
 if (!firebaseInstance) {
     // Fetch firebaseConfig from server and initialize Firebase

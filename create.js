@@ -1,5 +1,5 @@
 // Import the necessary functions from the Firebase database module
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
 
 // Declare firebase variable globally
 let firebase;

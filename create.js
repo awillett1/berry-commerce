@@ -1,5 +1,5 @@
 // Check if Firebase app has already been initialized
-if (!firebaseInstance) {
+if (!firebase.apps.length) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -8,7 +8,7 @@ if (!firebaseInstance) {
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
-            firebaseInstance = firebase.initializeApp(firebaseConfig);
+            firebase.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
             const registrationForm = document.getElementById('registrationForm');
@@ -30,12 +30,12 @@ async function handleRegistration(event) {
 
     try {
         // Create a new user with email/password
-        const userCredential = await firebaseInstance.auth().createUserWithEmailAndPassword(email, password);
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
         console.log('User registered successfully:', user.email);
 
         // Get a reference to the Firestore database
-        const firestore = firebaseInstance.firestore();
+        const firestore = firebase.firestore();
 
         // Store user information in Firestore under the "users" collection
         await firestore.collection('users').doc(user.uid).set({

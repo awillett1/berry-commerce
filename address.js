@@ -1,8 +1,6 @@
-// Declare firebaseInstance globally
-let firebaseInstance;
 
 // Check if Firebase app has already been initialized
-if (!firebaseInstance) {
+if (!firebase.apps.length) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -11,7 +9,7 @@ if (!firebaseInstance) {
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
-            firebaseInstance = firebase.initializeApp(firebaseConfig);
+            firebase.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
             addEventListeners();

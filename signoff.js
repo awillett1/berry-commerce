@@ -1,5 +1,3 @@
-// Declare firebaseInstance globally
-let firebaseInstance;
 
 // Check if Firebase app has already been initialized
 if (!firebaseInstance) {

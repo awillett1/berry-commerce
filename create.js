@@ -1,63 +1,70 @@
-// Check if firebaseInstance is already declared
-if (!window.firebaseInstance) {
-    // Declare firebaseInstance if not already defined
-    let firebaseInstance;
+let firebaseInstance;
 
-    // Check if Firebase app has already been initialized
-    if (!firebaseInstance || !firebaseInstance.apps.length) {
-        // Fetch firebaseConfig from server and initialize Firebase
-        document.addEventListener('DOMContentLoaded', async function () {
-            try {
-                // Fetch Firebase configuration from the server
-                const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-                const firebaseConfig = await response.json();
+// Check if Firebase app has already been initialized
+if (!firebaseInstance) {
+    // Fetch firebaseConfig from server and initialize Firebase
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            // Fetch Firebase configuration from the server
+            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            const firebaseConfig = await response.json();
 
-                // Initialize Firebase with the fetched configuration
-                firebase = firebase.initializeApp(firebaseConfig);
+            // Initialize Firebase with the fetched configuration
+            firebaseInstance = firebase.initializeApp(firebaseConfig);
 
-                // Continue with the rest of your code
-                addEventListeners();
+            // Continue with the rest of your code
+            const registrationForm = document.getElementById('registrationForm');
+            registrationForm.addEventListener('submit', handleRegistration);
 
-            } catch (error) {
-                console.error('Error fetching or initializing Firebase:', error);
-                // Handle errors, e.g., prevent further execution or show an error message
-            }
+        } catch (error) {
+            console.error('Error fetching or initializing Firebase:', error);
+            // Handle errors, e.g., prevent further execution or show an error message
+        }
+    });
+}
+
+async function handleRegistration(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById('registrationEmail').value;
+    const password = document.getElementById('registrationPassword').value;
+    const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
+
+    try {
+        // Create a new user with email/password
+        const userCredential = await firebaseInstance.auth().createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        console.log('User registered successfully:', user.email);
+
+        // Get a reference to the Firestore database
+        const firestore = firebaseInstance.firestore();
+
+        // Store user information in Firestore under the "users" collection
+        await firestore.collection('users').doc(user.uid).set({
+            email: email,
+            role: role
         });
+
+        // Redirect the user to index.html or any other desired page upon successful registration
+        window.location.href = 'index.html';
+        alert('Registration successful! You can now log in with your new account.');
+        alert('Selected Role: ' + role);
+
+    } catch (error) {
+        console.error('Error registering user:', error.message);
+
+        // Check if the error is due to an existing email address
+        if (error.code === 'auth/email-already-in-use') {
+            alert('This email address is already in use. Please use a different email or log in.');
+        } else {
+            // Handle other registration errors
+            alert('Registration failed. Please try again.');
+        }
     }
 }
 
-function addEventListeners() {
-    // Add event listener for sign-out button
-    document.getElementById('signOutButton').addEventListener('click', async function() {
-        // Fetch user's data from Firestore
-        const user = firebase.auth().currentUser;
-        const firestore = firebase.firestore();
-        const userRef = firestore.collection('users').doc(user.uid);
-
-        try {
-            const doc = await userRef.get();
-            if (doc.exists) {
-                const userData = doc.data();
-                const userEmail = user.email; // Get user's email
-                const userRole = userData.role; // Get user's role
-
-                // Display user's email and role in alert
-                //alert(`You are signed in as ${userEmail} with the role ${userRole}.`);
-            } else {
-                console.log('No such document!');
-            }
-        } catch (error) {
-            console.log('Error getting document:', error);
-        }
-
-        // Sign out the user
-        firebase.auth().signOut().then(function() {
-            // Sign-out successful, redirect to login page
-            window.location.href = 'login.html';
-            alert(`You have selectly signed out of your ${userRole} account, ${userEmail}`);
-        }).catch(function(error) {
-            // An error happened
-            console.error('Error signing out:', error);
-        });
-    });
+function showRegistrationForm() {
+    // Toggle the display of the registration section
+    document.getElementById('roleSelectionForm').style.display = 'none';
+    document.getElementById('registrationSection').style.display = 'block';
 }

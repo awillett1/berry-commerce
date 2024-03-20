@@ -1,29 +1,23 @@
-// Check if firebaseInstance is already declared
-if (!window.firebaseInstance) {
-    // Declare firebaseInstance if not already defined
-    let firebaseInstance;
+// Check if Firebase app has already been initialized
+if (!firebase.apps.length) {
+    // Fetch firebaseConfig from server and initialize Firebase
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            // Fetch Firebase configuration from the server
+            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            const firebaseConfig = await response.json();
 
-    if (!firebaseInstance || !firebaseInstance.apps.length) {
-        // Fetch firebaseConfig from server and initialize Firebase
-        document.addEventListener('DOMContentLoaded', async function () {
-            try {
-                // Fetch Firebase configuration from the server
-                const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-                const firebaseConfig = await response.json();
+            // Initialize Firebase with the fetched configuration
+            firebase.initializeApp(firebaseConfig);
 
-                // Initialize Firebase with the fetched configuration
-                firebase = firebase.initializeApp(firebaseConfig);
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLogin);
 
-                // Continue with the rest of your code
-                const loginForm = document.getElementById('loginForm');
-                loginForm.addEventListener('submit', handleLogin);
-
-            } catch (error) {
-                console.error('Error fetching or initializing Firebase:', error);
-                // Handle errors, e.g., prevent further execution or show an error message
-            }
-        });
-    }
+        } catch (error) {
+            console.error('Error fetching or initializing Firebase:', error);
+            // Handle errors, e.g., prevent further execution or show an error message
+        }
+    });
 }
 
 async function handleLogin(event) {
@@ -34,22 +28,19 @@ async function handleLogin(event) {
     const selectedRole = document.querySelector('input[name="role"]:checked').value; // Get the selected role from the login form
 
     try {
-        // Sign in user with email/password using firebaseInstance
-        const userCredential = await firebaseInstance.auth().signInWithEmailAndPassword(email, password);
+        // Sign in user with email/password
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
-        console.log('Selected Role: ', selectedRole);
 
-        // Get a reference to the Firestore database using firebaseInstance
-        const firestore = firebaseInstance.firestore();
+        // Get a reference to the Firestore database
+        const firestore = firebase.firestore();
 
         // Fetch user data from Firestore
         const userDoc = await firestore.collection('users').doc(user.uid).get();
         if (userDoc.exists) {
             const userData = userDoc.data();
             const userRole = userData.role;
-
-            console.log('Actual Role: ', userRole);
 
             // Check if user role matches the selected role in the login form
             if (userRole === selectedRole) {

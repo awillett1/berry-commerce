@@ -1,5 +1,8 @@
-// Declare firebase variable globally
-let firebaseInstance;
+// Check if firebaseInstance is already declared
+if (!window.firebaseInstance) {
+    // Initialize Firebase only if it's not already initialized
+    let firebaseInstance;
+    
 
 // Check if Firebase app has already been initialized
 if (!firebaseInstance) {
@@ -73,4 +76,5 @@ async function handleLogin(event) {
             alert('Login failed. Please try again.');
         }
     }
+}
 }

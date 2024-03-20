@@ -1,8 +1,8 @@
-// Declare firebase variable globally
-let firebaseInstance;
-
-// Check if Firebase app has already been initialized
-if (!firebaseInstance) {
+// Check if firebaseInstance is already declared
+if (!window.firebaseInstance) {
+    // Initialize Firebase only if it's not already initialized
+    let firebaseInstance;
+    
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {

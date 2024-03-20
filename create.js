@@ -1,11 +1,8 @@
-// Import the necessary functions from the Firebase database module
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
-
 // Declare firebase variable globally
-let firebase;
+let firebaseInstance;
 
 // Check if Firebase app has already been initialized
-if (!firebase) {
+if (!firebaseInstance) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -14,7 +11,7 @@ if (!firebase) {
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
-            firebase = firebase.initializeApp(firebaseConfig);
+            firebaseInstance = firebase.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
             const registrationForm = document.getElementById('registrationForm');
@@ -36,15 +33,15 @@ async function handleRegistration(event) {
 
     try {
         // Create a new user with email/password
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const userCredential = await firebaseInstance.auth().createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
         console.log('User registered successfully:', user.email);
 
         // Get a reference to the Realtime Database
-        const database = getDatabase(firebase);
+        const database = firebaseInstance.database();
 
         // Store user information in Firebase Realtime Database
-        await set(ref(database, 'users/' + user.uid), {
+        await database.ref('users/' + user.uid).set({
             email: email,
             role: role
         });
@@ -52,7 +49,7 @@ async function handleRegistration(event) {
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';
         alert('Registration successful! You can now log in with your new account.');
-        alert('Selected Role' + role);
+        alert('Selected Role: ' + role);
 
     } catch (error) {
         console.error('Error registering user:', error.message);

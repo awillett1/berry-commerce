@@ -65,6 +65,9 @@ function addEventListeners() {
     });
 }
 */
+
+// signoff.js
+
 // Wait for DOM content to be loaded before adding event listeners
 document.addEventListener('DOMContentLoaded', addEventListeners);
 
@@ -74,19 +77,20 @@ function addEventListeners() {
 }
 
 async function handleSignOut() {
-    // Fetch user's data from Firestore
-    const user = firebase.auth().currentUser;
-
-    if (!user) {
-        console.log('No user is signed in.');
-        return; // Exit the function if no user is signed in
-    }
-
-    const firestore = firebase.firestore();
-    const userRef = firestore.collection('users').doc(user.uid);
-
     try {
+        // Fetch user's data from Firestore
+        const user = firebase.auth().currentUser;
+
+        if (!user) {
+            console.log('No user is signed in.');
+            return; // Exit the function if no user is signed in
+        }
+
+        const firestore = firebase.firestore();
+        const userRef = firestore.collection('users').doc(user.uid);
+
         const doc = await userRef.get();
+
         if (doc.exists) {
             const userData = doc.data();
             const userEmail = user.email; // Get user's email
@@ -97,18 +101,17 @@ async function handleSignOut() {
         } else {
             console.log('No such user data!');
         }
-    } catch (error) {
-        console.log('Error getting user data:', error);
-    }
 
-    // Sign out the user
-    firebase.auth().signOut().then(function() {
+        // Sign out the user
+        await firebase.auth().signOut();
+        
         // Sign-out successful, redirect to login page
         window.location.href = 'login.html';
-
         alert('You have successfully signed out.');
-    }).catch(function(error) {
+
+    } catch (error) {
         // An error happened
         console.error('Error signing out:', error);
-    });
+        alert('Error signing out. Please try again.');
+    }
 }

@@ -1,5 +1,5 @@
 // Check if Firebase app has already been initialized
-if (!firebase.apps.length || !firebaseInstance) {
+if (!firebaseInstance) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {

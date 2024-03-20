@@ -2,7 +2,10 @@
 if (!window.firebaseInstance) {
     // Initialize Firebase only if it's not already initialized
     let firebaseInstance;
-    
+}
+
+// Check if Firebase app has already been initialized
+if (!firebaseInstance) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {

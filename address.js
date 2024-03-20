@@ -1,3 +1,4 @@
+let firebaseInstance; // Declare firebaseInstance globally
 // Check if Firebase app has already been initialized
 if (!firebaseInstance.apps.length) {
     // Fetch firebaseConfig from server and initialize Firebase

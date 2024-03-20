@@ -1,5 +1,7 @@
-// Declare firebase variable globally
-let firebaseInstance;
+// Declare firebase variable globally if not already declared
+if (typeof firebaseInstance === 'undefined') {
+    let firebaseInstance; // Declare firebaseInstance only if it's not already defined
+}
 
 // Check if Firebase app has already been initialized
 if (!firebaseInstance) {

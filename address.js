@@ -1,70 +1,39 @@
-/* // Check if Firebase app has already been initialized
-if (!firebase.apps.length) {
-    // Fetch firebaseConfig from server and initialize Firebase
-    document.addEventListener('DOMContentLoaded', async function () {
-        try {
-            // Fetch Firebase configuration from the server
-            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
-            const firebaseConfig = await response.json();
-
-            // Initialize Firebase with the fetched configuration
-            firebase.initializeApp(firebaseConfig);
-
-            // Continue with the rest of your code
-            const firestore = firebase.firestore();
-
-            // Add click event listener to the user icon
-            const userIcon = document.querySelector('.user-icon');
-            userIcon.addEventListener('click', function () {
-                // Check if the user is authenticated
-                const user = firebase.auth().currentUser;
-                if (user) {
-                    // User is signed in, check their role
-                    checkUserRole(user.uid, firestore);
-                } else {
-                    // User is not signed in, redirect to login page or handle as needed
-                    window.location.href = 'login.html';
-                }
-            });
-
-        } catch (error) {
-            console.error('Error fetching or initializing Firebase:', error);
-            // Handle errors, e.g., prevent further execution or show an error message
-        }
+function addEventListeners() {
+    document.getElementById('userIcon').addEventListener('click', function(event) {
+        event.preventDefault();
+        checkLoginAndRedirect();
     });
 }
 
-async function checkUserRole(userId, firestore) {
-    try {
-        // Fetch user data from Firestore
-        const userDoc = await firestore.collection('users').doc('users').collection(userId).get();
+function checkLoginAndRedirect() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in
+            const firestore = firebase.firestore();
+            const userRef = firestore.collection('users').doc(user.uid);
 
-        if (userDoc.exists) {
-            const userRole = userDoc.data().role;
+            userRef.get().then(function(doc) {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const userRole = userData.role;
 
-            // Redirect based on user role
-            if (userRole === 'user') {
-                window.location.href = 'account.html';
-            } else if (userRole === 'seller') {
-                window.location.href = 'seller.html';
-            } else {
-                // Handle unexpected role (optional)
-                alert('Invalid role. Please contact support.');
-                // Redirect to a default page or handle as needed
-                window.location.href = '404.html';
-            }
+                    // Redirect to appropriate page based on user role
+                    if (userRole === 'user') {
+                        window.location.href = 'account.html';
+                    } else if (userRole === 'seller') {
+                        window.location.href = 'seller.html';
+                    }
+                } else {
+                    console.log('No user data found!');
+                    // Handle case where user data does not exist
+
+                }
+            }).catch(function(error) {
+                console.log('Error getting user data:', error);
+            });
         } else {
-            // Handle user data not found (optional)
-            alert('User data not found. Please contact support.');
-            // Redirect to a default page or handle as needed
-            window.location.href = '404.html';
+            // No user is signed in
+            window.location.href = 'login.html';
         }
-    } catch (error) {
-        console.error('Error checking user role:', error.message);
-        // Handle errors (optional)
-        alert('Error checking user role. Please try again or contact support.');
-        // Redirect to a default page or handle as needed
-        window.location.href = '404.html';
-    }
+    });
 }
- */

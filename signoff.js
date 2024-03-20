@@ -67,6 +67,7 @@ function addEventListeners() {
 */
 
 // signoff.js
+
 // Wait for DOM content to be loaded before adding event listeners
 document.addEventListener('DOMContentLoaded', addEventListeners);
 
@@ -77,39 +78,15 @@ function addEventListeners() {
 
 async function handleSignOut() {
     try {
-        // Check if user is signed in
-        firebase.auth().onAuthStateChanged(async function(user) {
-            if (user) {
-                // Fetch user's data from Firestore
-                const firestore = firebase.firestore();
-                const userRef = firestore.collection('users').doc(user.uid);
-                const doc = await userRef.get();
+        // Sign out the user
+        await firebase.auth().signOut();
 
-                if (doc.exists) {
-                    const userData = doc.data();
-                    const userEmail = user.email; // Get user's email
-                    const userRole = userData.role; // Get user's role
-
-                    // Display user's email and role in alert
-                    // alert(`You are signed in as ${userEmail} with the role ${userRole}.`);
-                } else {
-                    console.log('No such user data!');
-                }
-
-                // Sign out the user
-                await firebase.auth().signOut();
-
-                // Sign-out successful, redirect to login page
-                window.location.href = 'login.html';
-                alert('You have successfully signed out.');
-            } else {
-                console.log('No user is signed in.');
-            }
-        });
+        // Sign-out successful, redirect to login page
+        window.location.href = 'login.html';
+        alert('You have successfully signed out.');
     } catch (error) {
         // An error happened
         console.error('Error signing out:', error);
         alert('Error signing out. Please try again.');
     }
 }
-

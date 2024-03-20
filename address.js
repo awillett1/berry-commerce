@@ -1,6 +1,5 @@
-
 // Check if Firebase app has already been initialized
-if (!firebase.apps.length) {
+if (!firebaseInstance.apps.length) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -9,7 +8,7 @@ if (!firebase.apps.length) {
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
-            firebase.initializeApp(firebaseConfig);
+            firebaseInstance.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
             addEventListeners();
@@ -29,10 +28,10 @@ function addEventListeners() {
 }
 
 function checkLoginAndRedirect() {
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebaseInstance.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in
-            const firestore = firebase.firestore();
+            const firestore = firebaseInstance.firestore();
             const userRef = firestore.collection('users').doc(user.uid);
 
             userRef.get().then(function(doc) {
@@ -59,5 +58,3 @@ function checkLoginAndRedirect() {
         }
     });
 }
-
-

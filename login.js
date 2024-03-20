@@ -1,6 +1,5 @@
-
 // Check if Firebase app has already been initialized
-if (!firebase.apps.length) {
+if (!firebaseInstance) {
     // Fetch firebaseConfig from server and initialize Firebase
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -9,7 +8,7 @@ if (!firebase.apps.length) {
             const firebaseConfig = await response.json();
 
             // Initialize Firebase with the fetched configuration
-            firebase.initializeApp(firebaseConfig);
+            firebaseInstance = firebase.initializeApp(firebaseConfig);
 
             // Continue with the rest of your code
             const loginForm = document.getElementById('loginForm');
@@ -30,14 +29,14 @@ async function handleLogin(event) {
     const selectedRole = document.querySelector('input[name="role"]:checked').value; // Get the selected role from the login form
 
     try {
-        // Sign in user with email/password
-        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+        // Sign in user with email/password using firebaseInstance
+        const userCredential = await firebaseInstance.auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         console.log('User logged in successfully:', user.email);
         console.log('Selected Role: ', selectedRole);
 
-        // Get a reference to the Firestore database
-        const firestore = firebase.firestore();
+        // Get a reference to the Firestore database using firebaseInstance
+        const firestore = firebaseInstance.firestore();
 
         // Fetch user data from Firestore
         const userDoc = await firestore.collection('users').doc(user.uid).get();

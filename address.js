@@ -119,3 +119,8 @@ async function checkLoginAndRedirect() {
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('userIcon').addEventListener('click', handleUserIconClick);
 });
+
+// Log Firebase initialization errors
+window.addEventListener('unhandledrejection', function (event) {
+    console.error('Unhandled promise rejection:', event.reason);
+});

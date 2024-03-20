@@ -43,6 +43,7 @@ async function handleRegistration(event) {
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';
         alert('Registration successful! You can now log in with your new account.');
+        alert('Selected Role' + role);
 
     } catch (error) {
         console.error('Error registering user:', error.message);

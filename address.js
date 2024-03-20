@@ -70,7 +70,6 @@ function handleUserIconClick(event) {
     checkLoginAndRedirect();
 }
 
-// Function to check login status and redirect accordingly
 async function checkLoginAndRedirect() {
     try {
         // Get the current user
@@ -88,10 +87,14 @@ async function checkLoginAndRedirect() {
                 const userData = userDoc.data();
                 const userRole = userData.role;
 
+                console.log('User Role:', userRole); // Log user's role
+
                 // Redirect to appropriate page based on user role
                 if (userRole === 'user') {
+                    console.log('Redirecting to user page...')
                     window.location.href = 'account.html';
                 } else if (userRole === 'seller') {
+                    console.log('Redirecting to seller page...');
                     window.location.href = 'seller.html';
                 }
             } else {
@@ -107,8 +110,3 @@ async function checkLoginAndRedirect() {
         // Handle errors, e.g., prevent further execution or show an error message
     }
 }
-
-// Add event listener to the user icon
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('userIcon').addEventListener('click', handleUserIconClick);
-});

@@ -24,11 +24,9 @@ if (!firebase.apps.length) {
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
 
-    //const firestore = firebase.firestore();
-
     const email = document.getElementById('registrationEmail').value;
     const password = document.getElementById('registrationPassword').value;
-   //  const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
+    const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
 
     try {
         // Create a new user with email/password
@@ -36,12 +34,11 @@ async function handleRegistration(event) {
         const user = userCredential.user;
         console.log('User registered successfully:', user.email);
 
-/*         // Store user information in Firestore (adjust the path to match your Firestore structure)
-        await firestore.collection('users').doc(user.uid).collection('users').add({
-            email: user.email,
-            role: role,
+        // Store user information in Firebase Realtime Database
+        await firebase.database().ref('users/' + user.uid).set({
+            email: email,
+            role: role
         });
- */
 
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';

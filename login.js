@@ -12,7 +12,7 @@ if (!window.firebaseInstance) {
                 const firebaseConfig = await response.json();
 
                 // Initialize Firebase with the fetched configuration
-                firebaseInstance = firebase.initializeApp(firebaseConfig);
+                firebase = firebase.initializeApp(firebaseConfig);
 
                 // Continue with the rest of your code
                 const loginForm = document.getElementById('loginForm');

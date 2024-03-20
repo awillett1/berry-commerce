@@ -64,7 +64,6 @@ async function handleRegistration(event) {
     }
 }
 
-
 function showRegistrationForm() {
     // Toggle the display of the registration section
     document.getElementById('roleSelectionForm').style.display = 'none';

@@ -1,4 +1,8 @@
-let firebase; // global var
+// Import the necessary functions from the Firebase database module
+import { getDatabase, ref, set } from "firebase/database";
+
+// Declare firebase variable globally
+let firebase;
 
 // Check if Firebase app has already been initialized
 if (!firebase) {
@@ -36,8 +40,11 @@ async function handleRegistration(event) {
         const user = userCredential.user;
         console.log('User registered successfully:', user.email);
 
+        // Get a reference to the Realtime Database
+        const database = getDatabase(firebase);
+
         // Store user information in Firebase Realtime Database
-        await firebase.database().ref('users/' + user.uid).set({
+        await set(ref(database, 'users/' + user.uid), {
             email: email,
             role: role
         });
@@ -57,7 +64,6 @@ async function handleRegistration(event) {
             // Handle other registration errors
             alert('Registration failed. Please try again.');
         }
-
     }
 }
 
@@ -66,5 +72,3 @@ function showRegistrationForm() {
     document.getElementById('roleSelectionForm').style.display = 'none';
     document.getElementById('registrationSection').style.display = 'block';
 }
-
-    

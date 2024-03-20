@@ -1,3 +1,28 @@
+// Declare firebase variable globally
+let firebaseInstance;
+
+// Check if Firebase app has already been initialized
+if (!firebaseInstance) {
+    // Fetch firebaseConfig from server and initialize Firebase
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            // Fetch Firebase configuration from the server
+            const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+            const firebaseConfig = await response.json();
+
+            // Initialize Firebase with the fetched configuration
+            firebaseInstance = firebase.initializeApp(firebaseConfig);
+
+            // Continue with the rest of your code
+            addEventListeners();
+
+        } catch (error) {
+            console.error('Error fetching or initializing Firebase:', error);
+            // Handle errors, e.g., prevent further execution or show an error message
+        }
+    });
+}
+
 function addEventListeners() {
     document.getElementById('userIcon').addEventListener('click', function(event) {
         event.preventDefault();
@@ -26,7 +51,6 @@ function checkLoginAndRedirect() {
                 } else {
                     console.log('No user data found!');
                     // Handle case where user data does not exist
-
                 }
             }).catch(function(error) {
                 console.log('Error getting user data:', error);
@@ -37,3 +61,5 @@ function checkLoginAndRedirect() {
         }
     });
 }
+
+

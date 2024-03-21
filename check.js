@@ -1,17 +1,33 @@
 // Function to execute when Firebase is initialized
 function initFirebaseAndCheckRole() {
-    // Check if user is signed in
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in
-            console.log("User is signed in.");
-            checkUserRole(user);
+            const firestore = firebase.firestore();
+            const userRef = firestore.collection('users').doc(user.uid);
+
+            userRef.get().then(function(doc) {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const userRole = userData.role;
+                    console.log("User is signed in.");
+
+                   checkUserRole(userRole);
+                } else {
+                    console.log("No user data found!");
+                    // Handle case where user data does not exist
+                    window.location.href = "login.html";
+                }
+            }).catch(function(error) {
+                console.log('Error getting user data:', error);
+            });
         } else {
-            // User is not signed in, redirect to login.html
-            console.log("User is not signed in.");
-            window.location.href = "login.html";
+            // No user is signed in
+            console.log("No user is signed in.");
+            window.location.href = 'login.html';
         }
     });
+}
 
     function checkUserRole(user) {
         // Get user's role from Firestore or any other database
@@ -49,4 +65,3 @@ function initFirebaseAndCheckRole() {
             window.location.href = "404.html";
         });
     }
-}

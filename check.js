@@ -7,7 +7,7 @@ function addEventListeners() {
     window.addEventListener('DOMContentLoaded', checkLoginAndRedirect);
 }
 
-function checkLoginAndRedirect() {
+async function checkLoginAndRedirect() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in
@@ -54,7 +54,7 @@ function checkLoginAndRedirect() {
     });
 }
 
-function checkIfSeller(uid) {
+async function checkIfSeller(uid) {
     const firestore = firebase.firestore();
     const sellerRef = firestore.collection('sellers').doc(uid);
     sellerRef.get().then(function(sellerDoc) {

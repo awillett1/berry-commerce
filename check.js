@@ -1,5 +1,6 @@
 //check.js
 
+/*
 // Define a function to handle authentication logic
 function handleAuthentication() {
     firebase.auth().onAuthStateChanged(function(user) {
@@ -41,3 +42,5 @@ function handleAuthentication() {
         }
     });
 }
+
+*/

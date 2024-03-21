@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
     nextButton.addEventListener('click', handleRoleSelection);
 });
 
-function handleRoleSelection() {
+async function handleRoleSelection() {
     const selectedRole = document.querySelector('input[name="role"]:checked').value;
 
     // Hide the role selection form
@@ -147,10 +147,6 @@ function handleRoleSelection() {
     } else {
         verificationCodeContainer.style.display = 'block';
     }
-
-    // Prevent default form submission
-    const registrationForm = document.getElementById('registrationForm');
-    registrationForm.addEventListener('submit', handleRegistration);
 }
 
 async function handleRegistration(event) {
@@ -174,6 +170,7 @@ async function handleRegistration(event) {
             await firestore.collection('users').doc(user.uid).set({
                 email: email,
                 role: selectedRole,
+                id: user.uid
                 // Add other user data if needed
             });
         } else {
@@ -183,10 +180,11 @@ async function handleRegistration(event) {
             if (verificationDoc.exists) {
                 const storedVerificationCode = verificationDoc.data().code;
                 if (verificationCode === storedVerificationCode) {
-                    await firestore.collection('sellers').doc(user.uid).set({
+                    await firestore.collection('sellers').doc(email).set({
                         email: email,
                         role: selectedRole,
                         verificationCode: verificationCode,
+                        id: user.uid
                         // Add other seller data if needed
                     });
                 } else {
@@ -202,6 +200,7 @@ async function handleRegistration(event) {
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';
         alert('Registration successful!');
+        alert('You have successfully registered for a ', user.selectedRole, 'account ', user.email, '.');
     } catch (error) {
         console.error('Error registering user:', error.message);
 

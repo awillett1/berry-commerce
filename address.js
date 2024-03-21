@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('userIcon').addEventListener('click', handleUserIconClick);
 });
 
+/*
 // Function to check login status and redirect accordingly
 function checkLoginAndRedirect() {
     firebase.auth().onAuthStateChanged(function(user) {
@@ -99,6 +100,49 @@ function checkLoginAndRedirect() {
                 } else {
                     console.log('No user data found!');
                     // Handle case where user data does not exist
+                }
+            }).catch(function(error) {
+                console.log('Error getting user data:', error);
+            });
+        } else {
+            // No user is signed in
+            window.location.href = 'login.html';
+        }
+    });
+}
+*/
+
+function checkLoginAndRedirect() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in
+            const firestore = firebase.firestore();
+            const userRef = firestore.collection('users').doc(user.uid);
+            const sellerRef = firestore.collection('sellers').doc(user.uid);
+
+            // Check if user data exists in the 'users' collection
+            userRef.get().then(function(userDoc) {
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    const userRole = userData.role;
+                    // Redirect to appropriate page based on user role
+                    if (userRole === 'user') {
+                        window.location.href = 'account.html';
+                    } else if (userRole === 'seller') {
+                        window.location.href = 'seller.html';
+                    }
+                } else {
+                    // Check if user data exists in the 'sellers' collection
+                    sellerRef.get().then(function(sellerDoc) {
+                        if (sellerDoc.exists) {
+                            window.location.href = 'seller.html';
+                        } else {
+                            console.log('No user or seller data found!');
+                            // Handle case where neither user nor seller data exists
+                        }
+                    }).catch(function(error) {
+                        console.log('Error getting seller data:', error);
+                    });
                 }
             }).catch(function(error) {
                 console.log('Error getting user data:', error);

@@ -182,16 +182,11 @@ async function handleRegistration(event) {
         }
     } catch (error) {
         console.error('Error registering user:', error.message);
-
-        // Check if the error is due to an existing email address
-        if (error.code === 'auth/email-already-in-use') {
-            alert('This email address is already in use. Please use a different email or log in.');
-        } else {
-            // Handle other registration errors
-            alert('Registration failed. Please try again.');
-        }
+        // Add an alert to inform the user about the error
+        alert('Error registering user: ' + error.message);
     }
 }
+
 
 // Function to show the registration form based on the selected role
 function showRegistrationForm() {

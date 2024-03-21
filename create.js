@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
     nextButton.addEventListener('click', handleRoleSelection);
 });
 
-async function handleRoleSelection() {
+async function showRegistrationForm() {
     const selectedRole = document.querySelector('input[name="role"]:checked').value;
 
     // Hide the role selection form

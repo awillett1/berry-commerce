@@ -119,60 +119,63 @@ function showRegistrationForm() {
 */
 
 // create.js
-
-// Wait for DOM content to be loaded before executing code
-document.addEventListener('DOMContentLoaded', function () {
-    // Add event listener to the "Next" button
-    document.getElementById('nextButton').addEventListener('click', handleNextButtonClick);
-});
-
-
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
-  
+
     const email = document.getElementById('registrationEmail').value;
     const password = document.getElementById('registrationPassword').value;
-    const verificationCode = document.getElementById('verificationCode').value;
-  
+    const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
+    const verificationCode = document.getElementById('verificationCode').value; // Get the verification code entered by the user
+
     try {
-      // Check if the verification code exists in the database
-      const verificationCodeRef = firebase.firestore().collection('verificationCodes').doc(email);
-      const doc = await verificationCodeRef.get();
-  
-      if (doc.exists && doc.data().code === verificationCode) {
-        // Verification code exists and matches, proceed with account creation
-  
-        // Create the account using Firebase Authentication
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-  
-        // Save user information in Firestore under 'sellers' collection
-        const userData = {
-          email: email,
-          code: verificationCode
-          // You can save additional user data here if needed
-        };
-        await firebase.firestore().collection('sellers').doc(user.uid).set(userData);
-  
-        // Account created successfully, redirect to a success page or do something else
-        console.log('Account created successfully!');
-      } else {
-        // Verification code does not exist or does not match, prevent account creation
-        console.log('Invalid verification code. Account not created.');
-      }
+        // Fetch the verification code associated with the user's email from Firestore
+        const verificationSnapshot = await firebase.firestore()
+            .collection('verificationCodes')
+            .doc(email)
+            .get();
+
+        // Check if the verification code document exists and if the provided code matches
+        if (verificationSnapshot.exists && verificationSnapshot.data().code === verificationCode) {
+            // Create a new user with email/password
+            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+            console.log('User registered successfully:', user.email);
+
+            // Get a reference to the Firestore database
+            const firestore = firebase.firestore();
+
+            // Store user information in Firestore under the "users" collection
+            await firestore.collection('sellers').doc(user.uid).set({
+                email: email,
+                role: role,
+                code: verificationCode
+            });
+
+            // Redirect the user to index.html or any other desired page upon successful registration
+            window.location.href = 'index.html';
+            alert('Registration successful! You can now log in with your new account.');
+            alert('Selected Role: ' + role);
+        } else {
+            alert('Invalid verification code. Please try again.');
+        }
+
     } catch (error) {
-      // Handle errors
-      console.error('Error during registration:', error);
-      // You can show an error message to the user here
-      console.log('Registration failed. Please try again.');
+        console.error('Error registering user:', error.message);
+
+        // Check if the error is due to an existing email address
+        if (error.code === 'auth/email-already-in-use') {
+            alert('This email address is already in use. Please use a different email or log in.');
+        } else {
+            // Handle other registration errors
+            alert('Registration failed. Please try again.');
+        }
     }
 }
 
-function handleNextButtonClick() {
-    // Hide the role selection form
+function showRegistrationForm() {
+    // Toggle the display of the registration section
     document.getElementById('roleSelectionForm').style.display = 'none';
-  
-    // Show the registration form
     document.getElementById('registrationSection').style.display = 'block';
 }
+
 

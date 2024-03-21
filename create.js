@@ -164,7 +164,7 @@ async function handleRegistration(event) {
         const firestore = firebase.firestore();
 
         // Store user data in Firestore
-        await firestore.collection('users').doc(email).set({
+        await firestore.collection('users').doc(user.uid).set({
             email: email,
             role: selectedRole,
             // Add other user data if needed

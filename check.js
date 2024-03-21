@@ -48,16 +48,11 @@ function initFirebaseAndCheckRole() {
     }
 }
 
-// Call the function to initialize Firebase and check user role when Firebase is ready
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        // Firebase is ready
-        console.log("Firebase is initialized.");
-        initFirebaseAndCheckRole();
-    } else {
-        // Handle case when Firebase initialization fails
-        console.log("Error initializing Firebase.");
-        // Redirect to 404 page or handle the error as needed
-        window.location.href = "404.html";
-    }
-});
+// Check if Firebase is initialized before calling the function to initialize Firebase and check user role
+if (firebase.apps.length === 0) {
+    console.log("Firebase not initialized. Waiting for initialization...");
+    //firebase.initializeApp({});
+}
+
+// Call the function to initialize Firebase and check user role
+initFirebaseAndCheckRole();

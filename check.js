@@ -25,16 +25,16 @@ function initFirebaseAndCheckRole() {
                 console.log("Current Page:", currentPage);
 
                 console.log("Checking roles...");
+                if ((role === "seller" && currentPage.includes("account.html")) ||
+                    (role === "user" && currentPage.includes("seller.html"))) {
+                    // User is authorized to access the current page, show the content
+                    console.log("Not authorized, not showing content.");
+                    document.getElementById("content").style.display = "none";
+                    window.location.href = "404.html";
+                    }
                 if ((role === "seller" && currentPage.includes("seller.html")) ||
                     (role === "user" && currentPage.includes("account.html"))) {
-                    // User is authorized to access the current page, show the content
-                    console.log("Authorized, showing content.");
-                    document.getElementById("content").style.display = "block";
-                } else {
-                    // Redirect to 404 page
-                    console.log("Not authorized, redirecting to 404.html.");
-                    window.location.href = "404.html";
-                }
+                        console.log("Authorized, showing content.");
             } else {
                 console.log("User does not exist.");
                 // Redirect to 404 page

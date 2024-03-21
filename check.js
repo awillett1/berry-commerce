@@ -12,7 +12,7 @@ function initFirebaseAndCheckRole() {
                     const userRole = userData.role;
                     console.log("User is signed in.");
 
-                   checkUserRole(userRole);
+                   checkUserRole(userData);
                 } else {
                     console.log("No user data found!");
                     // Handle case where user data does not exist
@@ -30,6 +30,7 @@ function initFirebaseAndCheckRole() {
 }
 
     function checkUserRole(user) {
+        console.log("Inside checkUserRole function");
         // Get user's role from Firestore or any other database
         // For demonstration, assuming user's role is stored in a field named 'role'
         firebase.firestore().collection("users").doc(user.uid).get().then(function(doc) {

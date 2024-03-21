@@ -4,10 +4,12 @@ function initFirebaseAndCheckRole() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in
+            console.log("User is signed in.")
             checkUserRole(user);
         } else {
             // User is not signed in, redirect to login.html
             window.location.href = "login.html";
+            console.log("User is not signed in.")
         }
     });
 
@@ -17,18 +19,21 @@ function initFirebaseAndCheckRole() {
         firebase.firestore().collection("users").doc(user.uid).get().then(function(doc) {
             if (doc.exists) {
                 var role = doc.data().role;
+                console.log("Role:", role)
                 // Determine the current page's URL
                 var currentPage = window.location.pathname;
                 console.log("Current Page:", currentPage);
 
-                // Check if user is trying to access unauthorized pages
-                if ((role === "seller" && currentPage.includes("account.html")) ||
-                    (role === "user" && currentPage.includes("seller.html"))) {
-                    // Redirect to 404 page
-                    window.location.href = "404.html";
-                } else {
+                console.log("Checking roles...")
+                if ((role === "seller" && currentPage.includes("seller.html")) ||
+                    (role === "user" && currentPage.includes("account.html"))) {
                     // User is authorized to access the current page, show the content
+                    console.log("Authorized, showing content.")
                     document.getElementById("content").style.display = "block";
+                } else {
+                    // Redirect to 404 page
+                    console.log("Not authorized, redirecting to 404.html.")
+                    window.location.href = "404.html";
                 }
             } else {
                 console.log("User does not exist.");

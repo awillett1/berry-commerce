@@ -1,7 +1,6 @@
 // check.js
 
 document.addEventListener("DOMContentLoaded", function() {
-    firebaseInit().then(function() {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 // User is signed in
@@ -40,8 +39,4 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         });
-    }).catch(function(error) {
-        console.error('Error initializing Firebase:', error);
-        // Handle errors, e.g., prevent further execution or show an error message
-    });
 });

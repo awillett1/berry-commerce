@@ -117,6 +117,11 @@ function showRegistrationForm() {
     document.getElementById('registrationSection').style.display = 'block';
 }
 */
+// Wait for DOM content to be loaded before executing code
+document.addEventListener('DOMContentLoaded', function () {
+    // Call the function to display the registration form
+    showRegistrationForm();
+});
 
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
@@ -161,6 +166,5 @@ async function handleRegistration(event) {
 
 function showRegistrationForm() {
     // Toggle the display of the registration section
-    document.getElementById('roleSelectionForm').style.display = 'none';
     document.getElementById('registrationSection').style.display = 'block';
 }

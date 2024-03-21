@@ -41,11 +41,3 @@ function handleAuthentication() {
         }
     });
 }
-
-// Call handleAuthentication() after Firebase initialization is complete
-firebaseInit().then(function() {
-    handleAuthentication();
-}).catch(function(error) {
-    console.error('Error initializing Firebase:', error);
-    // Handle errors, e.g., prevent further execution or show an error message
-});

@@ -127,11 +127,14 @@ function showRegistrationForm() {
     document.getElementById('registrationSection').style.display = 'block';
     document.getElementById('userRole').value = role;
     if (role === 'seller') {
-      document.getElementById('verificationCodeContainer').style.display = 'block';
+        document.getElementById('verificationCodeContainer').style.display = 'block';
     } else {
-      document.getElementById('verificationCodeContainer').style.display = 'none';
+        document.getElementById('verificationCodeContainer').style.display = 'none';
     }
-  }
+
+    return false; // Prevent form submission
+}
+
 
   // Registration Form Submission
   document.getElementById('registrationForm').addEventListener('submit', (e) => {

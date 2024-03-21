@@ -1,4 +1,4 @@
-//check.js
+// check.js
 
 document.addEventListener("DOMContentLoaded", function() {
     firebaseInit().then(function() {
@@ -40,5 +40,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         });
+    }).catch(function(error) {
+        console.error('Error initializing Firebase:', error);
+        // Handle errors, e.g., prevent further execution or show an error message
     });
 });

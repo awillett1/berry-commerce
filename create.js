@@ -118,7 +118,7 @@ function showRegistrationForm() {
 }
 */
 
-// seller.js 
+// create.js 
 
 document.addEventListener('DOMContentLoaded', function () {
     const nextButton = document.getElementById('nextButton');
@@ -166,43 +166,17 @@ async function handleRegistration(event) {
         const firestore = firebase.firestore();
 
         // Store user data in Firestore
-        if (selectedRole === 'user') {
-            await firestore.collection('users').doc(user.uid).set({
-                email: email,
-                role: selectedRole,
-                id: user.uid
-                // Add other user data if needed
-            });
-        } else {
-            const verificationCode = document.getElementById('verificationCode').value;
-            // Check if verification code matches the stored code
-            const verificationDoc = await firestore.collection('verificationCodes').doc(email).get();
-            if (verificationDoc.exists) {
-                const storedVerificationCode = verificationDoc.data().code;
-                if (verificationCode === storedVerificationCode) {
-                    await firestore.collection('sellers').doc(email).set({
-                        email: email,
-                        role: selectedRole,
-                        verificationCode: verificationCode,
-                        id: user.uid
-                        // Add other seller data if needed
-                    });
-                } else {
-                    alert('Verification code is incorrect. Registration failed.');
-                    return;
-                }
-            } else {
-                alert('No verification code found for this email. Registration failed.');
-                return;
-            }
-        }
+        await firestore.collection('users').doc(email).set({
+            email: email,
+            role: selectedRole,
+            // Add other user data if needed
+        });
 
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';
         alert('Registration successful!');
-        alert('You have successfully registered for a ', user.selectedRole, 'account ', user.email, '.');
     } catch (error) {
-        console.error('Error registering user:', error.message);
+        console.error('Error registering user:', error);
 
         // Handle registration errors
         if (error.code === 'auth/email-already-in-use') {

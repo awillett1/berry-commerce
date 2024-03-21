@@ -134,14 +134,15 @@ async function handleRegistration(event) {
         if (selectedRole === 'user') {
             await firestore.collection('users').doc(user.uid).set({
                 email: email,
-                role: selectedRole,
+                role: selectedRole
                 // Add other user data if needed
             });
         } else if (selectedRole === 'seller') {
+            const verificationCode = document.getElementById('verificationCode').value; // Retrieve the verification code as a string
             await firestore.collection('sellers').doc(user.uid).set({
                 email: email,
                 role: selectedRole,
-                verificationCode: verificationCode,
+                verificationCode: verificationCode
                 // Add other seller data if needed
             });
         }

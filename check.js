@@ -1,4 +1,7 @@
 // check.js
+window.addEventListener('DOMContentLoaded', function() {
+    checkLoginAndRedirect();
+});
 
 function checkLoginAndRedirect() {
     firebase.auth().onAuthStateChanged(function(user) {

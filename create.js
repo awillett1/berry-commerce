@@ -73,7 +73,7 @@ registrationForm.addEventListener('submit', handleRegistration);
 */
 
 // create.js 
-
+/*
 document.addEventListener('DOMContentLoaded', function () {
     const nextButton = document.getElementById('nextButton');
     nextButton.addEventListener('click', showRegistrationForm);
@@ -166,3 +166,63 @@ async function handleRegistration(event) {
 // Add event listener for registration form submission
 const registrationForm = document.getElementById('registrationForm');
 registrationForm.addEventListener('submit', handleRegistration);
+*/
+
+async function handleRegistration(event) {
+    event.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById('registrationEmail').value;
+    const password = document.getElementById('registrationPassword').value;
+    const selectedRole = document.getElementById('userRole').value;
+
+    try {
+        if (selectedRole === 'seller') {
+            const verificationCode = document.getElementById('verificationCode').value;
+            const verificationDoc = await firebase.firestore().collection('verificationCodes').doc(email).get();
+            
+            if (!verificationDoc.exists || verificationDoc.data().code !== verificationCode) {
+                alert('Verification code is incorrect. Registration failed.');
+                return;
+            }
+        }
+
+        // Register user with email/password
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        console.log('User registered successfully:', user.email);
+
+        // Get a reference to the Firestore database
+        const firestore = firebase.firestore();
+
+        // Store user data in Firestore
+        if (selectedRole === 'user') {
+            await firestore.collection('users').doc(user.uid).set({
+                email: email,
+                role: selectedRole
+                // Add other user data if needed
+            });
+        } else if (selectedRole === 'seller') {
+            const verificationCode = document.getElementById('verificationCode').value; // Retrieve the verification code as a string
+            await firestore.collection('sellers').doc(user.uid).set({
+                email: email,
+                role: selectedRole,
+                verificationCode: verificationCode
+                // Add other seller data if needed
+            });
+        }
+
+        // Redirect the user to index.html or any other desired page upon successful registration
+        window.location.href = 'index.html';
+        alert('Registration successful!');
+        alert('You have successfully registered for a ' + selectedRole + ' account ' + email + '.');
+    } catch (error) {
+        console.error('Error registering user:', error);
+
+        // Handle registration errors
+        if (error.code === 'auth/email-already-in-use') {
+            alert('Email address is already in use. Please use a different email or log in.');
+        } else {
+            alert('Registration failed. Please try again.');
+        }
+    }
+}

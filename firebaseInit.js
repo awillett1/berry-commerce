@@ -26,18 +26,17 @@ document.addEventListener('DOMContentLoaded', initializeFirebase);
 // Initialize Firebase
 async function initializeFirebase() {
     try {
-        // Fetch Firebase configuration link from Firebase Storage
+        // Fetch Firebase configuration from Firebase Storage
         const storageRef = firebase.storage().ref();
         const configFileRef = storageRef.child('firebaseConfig.json');
         const response = await configFileRef.getDownloadURL();
-        const firebaseConfigLink = await response.json();
         
         // Fetch Firebase configuration from the link
-        const configResponse = await fetch(firebaseConfigLink.firebaseConfigLink);
-        const firebaseConfig = await configResponse.json();
+        const configResponse = await fetch(response);
+        const firebaseConfig = await configResponse.text(); // Fetch text instead of JSON
 
         // Initialize Firebase with the fetched configuration
-        firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(JSON.parse(firebaseConfig)); // Parse JSON to object
 
         console.log('Firebase initialized successfully.');
     } catch (error) {
@@ -48,4 +47,3 @@ async function initializeFirebase() {
 
 // Call the function to initialize Firebase when the DOM content is loaded
 document.addEventListener('DOMContentLoaded', initializeFirebase);
-

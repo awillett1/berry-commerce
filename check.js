@@ -40,6 +40,3 @@ function initFirebaseAndExecute() {
       }
     });
   }
-
-  // Execute the function when Firebase is ready
-  firebaseInit().then(initFirebaseAndExecute);

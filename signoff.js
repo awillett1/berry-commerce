@@ -84,7 +84,6 @@ async function handleSignOut() {
         // Sign-out successful, redirect to login page
         window.location.href = 'login.html';
         alert('You have successfully signed out.');
-        console.log("User is successfully signed out.")
     } catch (error) {
         // An error happened
         console.error('Error signing out:', error);

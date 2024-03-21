@@ -172,10 +172,23 @@ async function handleRegistration(event) {
     }
 }
 
+// Function to show the registration form based on the selected role
 function showRegistrationForm() {
-    // Toggle the display of the registration section
-    document.getElementById('roleSelectionForm').style.display = 'none';
-    document.getElementById('registrationSection').style.display = 'block';
+    const roleSelection = document.querySelector('input[name="role"]:checked').value;
+
+    // Hide all registration sections initially
+    document.getElementById('roleSelectionSection').style.display = 'none';
+    document.getElementById('registrationSection').style.display = 'none';
+
+    // Show the appropriate registration section based on the selected role
+    if (roleSelection === 'seller') {
+        document.getElementById('registrationSection').style.display = 'block';
+        document.getElementById('verificationCode').parentNode.style.display = 'block'; // Show verification code field
+    } else {
+        document.getElementById('roleSelectionSection').style.display = 'block';
+        document.getElementById('verificationCode').parentNode.style.display = 'none'; // Hide verification code field
+    }
 }
+
 
 

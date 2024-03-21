@@ -147,7 +147,6 @@ async function showRegistrationForm() {
         verificationCodeContainer.style.display = 'block';
     }
 }
-
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
 
@@ -168,7 +167,6 @@ async function handleRegistration(event) {
         await firestore.collection('users').doc(email).set({
             email: email,
             role: selectedRole,
-            id: user.id
             // Add other user data if needed
         });
 

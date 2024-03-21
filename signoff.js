@@ -67,7 +67,7 @@ function addEventListeners() {
 */
 
 // signoff.js
-
+// test comment
 // Wait for DOM content to be loaded before adding event listeners
 document.addEventListener('DOMContentLoaded', addEventListeners);
 

@@ -168,6 +168,7 @@ const registrationForm = document.getElementById('registrationForm');
 registrationForm.addEventListener('submit', handleRegistration);
 */
 
+// test comment
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
 

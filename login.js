@@ -21,6 +21,7 @@ if (!firebaseInstance) {
     });
 }
 */
+// login.js
 
 // Assume Firebase has been initialized elsewhere
 document.addEventListener('DOMContentLoaded', async function () {

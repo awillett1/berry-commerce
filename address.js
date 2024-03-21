@@ -64,6 +64,7 @@ function checkLoginAndRedirect() {
 */
 
 // address.js 
+// test comment
 
 // Function to handle the click event on the user icon
 function handleUserIconClick(event) {

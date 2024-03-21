@@ -27,14 +27,17 @@ function initFirebaseAndCheckRole() {
                 console.log("Checking roles...");
                 if ((role === "seller" && currentPage.includes("account.html")) ||
                     (role === "user" && currentPage.includes("seller.html"))) {
-                    // User is authorized to access the current page, show the content
+                    // User is NOT authorized to access the current page, show the content
                     console.log("Not authorized, not showing content.");
+                    alert("You are not authorized to access this page as a", role);
                     document.getElementById("content").style.display = "none";
                     window.location.href = "404.html";
-                    }
+                } 
                 if ((role === "seller" && currentPage.includes("seller.html")) ||
-                    (role === "user" && currentPage.includes("account.html"))) {
-                        console.log("Authorized, showing content.");
+                (role === "user" && currentPage.includes("account.html"))){
+                    // User is authorized to access the current page, show the content
+                    console.log("Authorized, showing content");
+                }
             } else {
                 console.log("User does not exist.");
                 // Redirect to 404 page

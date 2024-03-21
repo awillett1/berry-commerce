@@ -80,6 +80,7 @@ async function handleSignOut() {
     try {
         // Sign out the user
         await firebase.auth().signOut();
+        console.log("User has been signed out successfully.")
 
         // Sign-out successful, redirect to login page
         window.location.href = 'login.html';

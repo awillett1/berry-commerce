@@ -180,9 +180,11 @@ async function handleRegistration(event) {
         if (selectedRole === 'seller') {
             const verificationCode = document.getElementById('verificationCode').value;
             const verificationDoc = await firebase.firestore().collection('verificationCodes').doc(email).get();
+            console.log("Retrieved verificationDoc")
             
             if (!verificationDoc.exists || verificationDoc.data().code !== verificationCode) {
                 alert('Verification code is incorrect. Registration failed.');
+                 console.log("Incorrect verification code. Registration cancelled.")
                 return;
             }
         }
@@ -197,6 +199,7 @@ async function handleRegistration(event) {
 
         // Store user data in Firestore
         if (selectedRole === 'user') {
+            console.log("Storing 'user' data...")
             await firestore.collection('users').doc(user.uid).set({
                 email: email,
                 role: selectedRole
@@ -204,6 +207,8 @@ async function handleRegistration(event) {
             });
         } else if (selectedRole === 'seller') {
             const verificationCode = document.getElementById('verificationCode').value; // Retrieve the verification code as a string
+            console.log("Retrieved verification code")
+            console.log("Storing 'seller' data...")
             await firestore.collection('sellers').doc(user.uid).set({
                 email: email,
                 role: selectedRole,

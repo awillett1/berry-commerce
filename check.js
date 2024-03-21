@@ -47,14 +47,3 @@ function initFirebaseAndCheckRole() {
         });
     }
 }
-
-/*
-// Check if Firebase is initialized before calling the function to initialize Firebase and check user role
-if (firebase.apps.length === 0) {
-    console.log("Firebase not initialized. Waiting for initialization...");
-    //firebase.initializeApp({});
-}
-*/
-
-// Call the function to initialize Firebase and check user role
-initFirebaseAndCheckRole();

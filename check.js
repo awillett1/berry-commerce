@@ -1,8 +1,3 @@
-// Call the function to initialize Firebase and check user role when the DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initFirebaseAndCheckRole();
-});
-
 // Function to execute when Firebase is initialized
 function initFirebaseAndCheckRole() {
     // Check if user is signed in
@@ -52,3 +47,17 @@ function initFirebaseAndCheckRole() {
         });
     }
 }
+
+// Call the function to initialize Firebase and check user role when Firebase is ready
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        // Firebase is ready
+        console.log("Firebase is initialized.");
+        initFirebaseAndCheckRole();
+    } else {
+        // Handle case when Firebase initialization fails
+        console.log("Error initializing Firebase.");
+        // Redirect to 404 page or handle the error as needed
+        window.location.href = "404.html";
+    }
+});

@@ -117,11 +117,15 @@ function showRegistrationForm() {
     document.getElementById('registrationSection').style.display = 'block';
 }
 */
+
+// create.js
+
 // Wait for DOM content to be loaded before executing code
 document.addEventListener('DOMContentLoaded', function () {
-    // Call the function to display the registration form
-    showRegistrationForm();
+    // Add event listener to the "Next" button
+    document.getElementById('nextButton').addEventListener('click', handleNextButtonClick);
 });
+
 
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
@@ -164,7 +168,11 @@ async function handleRegistration(event) {
     }
 }
 
-function showRegistrationForm() {
-    // Toggle the display of the registration section
+function handleNextButtonClick() {
+    // Hide the role selection form
+    document.getElementById('roleSelectionForm').style.display = 'none';
+  
+    // Show the registration form
     document.getElementById('registrationSection').style.display = 'block';
 }
+

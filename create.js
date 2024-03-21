@@ -155,12 +155,6 @@ async function handleRegistration(event) {
       // Handle errors
       console.error('Error during registration:', error);
       // You can show an error message to the user here
+      console.log('Registration failed. Please try again.');
     }
-  }
-  
-  
-  function showRegistrationForm() {
-    // Toggle the display of the registration section
-    document.getElementById('roleSelectionForm').style.display = 'none';
-    document.getElementById('registrationSection').style.display = 'block';
 }

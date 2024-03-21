@@ -1,7 +1,11 @@
 // check.js
-window.addEventListener('DOMContentLoaded', function() {
-    checkLoginAndRedirect();
-});
+// Wait for DOM content to be loaded before adding event listeners
+document.addEventListener('DOMContentLoaded', addEventListeners);
+
+function addEventListeners() {
+    // Add event listener for DOMContentLoaded event on window
+    window.addEventListener('DOMContentLoaded', checkLoginAndRedirect);
+}
 
 function checkLoginAndRedirect() {
     firebase.auth().onAuthStateChanged(function(user) {

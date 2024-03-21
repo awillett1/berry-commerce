@@ -1,13 +1,29 @@
-// check.js
+
+//check.js 
+
 // Wait for DOM content to be loaded before adding event listeners
 document.addEventListener('DOMContentLoaded', addEventListeners);
 
+let firebaseInitialized = false;
+
 function addEventListeners() {
     // Add event listener for DOMContentLoaded event on window
-    window.addEventListener('DOMContentLoaded', checkLoginAndRedirect);
+    window.addEventListener('DOMContentLoaded', () => {
+        if (firebaseInitialized) {
+            checkLoginAndRedirect();
+        } else {
+            // Wait for Firebase to initialize
+            firebase.auth().onAuthStateChanged(() => {
+                firebaseInitialized = true;
+                checkLoginAndRedirect();
+            });
+        }
+    });
 }
 
 async function checkLoginAndRedirect() {
+    if (!firebaseInitialized) return; // Wait for Firebase to initialize
+
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in
@@ -55,6 +71,8 @@ async function checkLoginAndRedirect() {
 }
 
 async function checkIfSeller(uid) {
+    if (!firebaseInitialized) return; // Wait for Firebase to initialize
+
     const firestore = firebase.firestore();
     const sellerRef = firestore.collection('sellers').doc(uid);
     sellerRef.get().then(function(sellerDoc) {

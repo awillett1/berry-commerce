@@ -72,34 +72,7 @@ const registrationForm = document.getElementById('registrationForm');
 registrationForm.addEventListener('submit', handleRegistration);
 */
 
-document.addEventListener('DOMContentLoaded', function () {
-    const nextButton = document.getElementById('nextButton');
-    nextButton.addEventListener('click', showRegistrationForm);
-});
-
-async function showRegistrationForm() {
-    const selectedRole = document.querySelector('input[name="role"]:checked').value;
-
-    // Hide the role selection form
-    const roleSelectionSection = document.getElementById('roleSelectionSection');
-    roleSelectionSection.style.display = 'none';
-
-    // Display the registration form
-    const registrationSection = document.getElementById('registrationSection');
-    registrationSection.style.display = 'block';
-
-    // Transfer the selected role to the registration form
-    const userRoleInput = document.getElementById('userRole');
-    userRoleInput.value = selectedRole;
-
-    // Show/hide verification code field based on selected role
-    const verificationCodeContainer = document.getElementById('verificationCodeContainer');
-    if (selectedRole === 'user') {
-        verificationCodeContainer.style.display = 'none';
-    } else {
-        verificationCodeContainer.style.display = 'block';
-    }
-}
+// create.js 
 
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
@@ -131,23 +104,20 @@ async function handleRegistration(event) {
         if (selectedRole === 'user') {
             await firestore.collection('users').doc(user.uid).set({
                 email: email,
-                role: selectedRole,
-                // Add other user data if needed
+                role: selectedRole
             });
         } else if (selectedRole === 'seller') {
             await firestore.collection('sellers').doc(email).set({
                 email: email,
                 role: selectedRole,
-                verificationCode: verificationCode,
-                id: user.uid
-                // Add other seller data if needed
+                verificationCode: verificationCode
             });
         }
 
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';
         alert('Registration successful!');
-        alert('You have successfully registered for a ' + selectedRole + ' account ' + email + '.');
+        alert('You have successfully registered for a ' + selectedRole + ' account, ' + email + '.');
     } catch (error) {
         console.error('Error registering user:', error);
 

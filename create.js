@@ -74,6 +74,30 @@ registrationForm.addEventListener('submit', handleRegistration);
 
 // create.js 
 
+async function showRegistrationForm() {
+    const selectedRole = document.querySelector('input[name="role"]:checked').value;
+
+    // Hide the role selection form
+    const roleSelectionSection = document.getElementById('roleSelectionSection');
+    roleSelectionSection.style.display = 'none';
+
+    // Display the registration form
+    const registrationSection = document.getElementById('registrationSection');
+    registrationSection.style.display = 'block';
+
+    // Transfer the selected role to the registration form
+    const userRoleInput = document.getElementById('userRole');
+    userRoleInput.value = selectedRole;
+
+    // Show/hide verification code field based on selected role
+    const verificationCodeContainer = document.getElementById('verificationCodeContainer');
+    if (selectedRole === 'user') {
+        verificationCodeContainer.style.display = 'none';
+    } else {
+        verificationCodeContainer.style.display = 'block';
+    }
+}
+
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
 

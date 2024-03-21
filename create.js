@@ -105,19 +105,21 @@ async function handleRegistration(event) {
             await firestore.collection('users').doc(user.uid).set({
                 email: email,
                 role: selectedRole
+                // Add other user data if needed
             });
         } else if (selectedRole === 'seller') {
-            await firestore.collection('sellers').doc(email).set({
+            await firestore.collection('sellers').doc(user.uid).set({
                 email: email,
                 role: selectedRole,
                 verificationCode: verificationCode
+                // Add other seller data if needed
             });
         }
 
         // Redirect the user to index.html or any other desired page upon successful registration
         window.location.href = 'index.html';
         alert('Registration successful!');
-        alert('You have successfully registered for a ' + selectedRole + ' account, ' + email + '.');
+        alert('You have successfully registered for a ' + selectedRole + ' account ' + email + '.');
     } catch (error) {
         console.error('Error registering user:', error);
 

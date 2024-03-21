@@ -122,6 +122,7 @@ function showRegistrationForm() {
 
 // Function to show registration form and pass role
 function showRegistrationForm() {
+    
     const role = document.querySelector('input[name="role"]:checked').value;
     document.getElementById('roleSelectionSection').style.display = 'none';
     document.getElementById('registrationSection').style.display = 'block';
@@ -132,67 +133,75 @@ function showRegistrationForm() {
         document.getElementById('verificationCodeContainer').style.display = 'none';
     }
 
+    console.log("Inside showRegistrationForm function");
+
+
     return false; // Prevent form submission
 }
 
 
-  // Registration Form Submission
-  document.getElementById('registrationForm').addEventListener('submit', (e) => {
-    e.preventDefault();
+  // Separate function to handle registration form submission
+function handleRegistration() {
+    console.log("Inside handleRegistration function");
     const email = document.getElementById('registrationEmail').value;
     const password = document.getElementById('registrationPassword').value;
     const role = document.getElementById('userRole').value;
 
     if (role === 'seller') {
-      const verificationCode = document.getElementById('verificationCode').value;
-      // Check if verification code matches
-      db.collection('verificationCodes').doc(email).get()
-        .then(doc => {
-          if (doc.exists && doc.data().code === verificationCode) {
-            // Register seller
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-              .then((userCredential) => {
-                // Save seller data to Firestore
-                db.collection('sellers').doc(email).set({
-                  email: email,
-                  role: role,
-                  verificationCode: verificationCode,
-                  userId: userCredential.user.uid
-                })
-                .then(() => {
-                  alert('Seller registered successfully!');
-                  window.location.href = 'index.html';
-                  onsole.log('Selected Role: ' + role);
-                })
-                .catch(error => console.error('Error adding seller to Firestore: ', error));
-              })
-              .catch((error) => {
-                alert(error.message);
-              });
-          } else {
-            alert('Invalid verification code.');
-          }
-        })
-        .catch(error => console.error('Error getting verification code: ', error));
+        const verificationCode = document.getElementById('verificationCode').value;
+        // Check if verification code matches
+        db.collection('verificationCodes').doc(email).get()
+            .then(doc => {
+                if (doc.exists && doc.data().code === verificationCode) {
+                    // Register seller
+                    console.log("Checking docs for seller ...");
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                        .then((userCredential) => {
+                            // Save seller data to Firestore
+                            db.collection('sellers').doc(email).set({
+                                email: email,
+                                role: role,
+                                verificationCode: verificationCode,
+                                userId: userCredential.user.uid
+                            })
+                                .then(() => {
+                                    alert('Seller registered successfully!');
+                                    window.location.href = 'index.html';
+                                    console.log('Selected Role: ' + role);
+                                })
+                                .catch(error => console.error('Error adding seller to Firestore: ', error));
+                        })
+                        .catch((error) => {
+                            alert(error.message);
+                        });
+                } else {
+                    alert('Invalid verification code.');
+                }
+            })
+            .catch(error => console.error('Error getting verification code: ', error));
     } else {
-      // Register user
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Save user data to Firestore
-          db.collection('users').doc(email).set({
-            email: email,
-            role: role,
-            userId: userCredential.user.uid
-          })
-          .then(() => {
-            alert('User registered successfully!');
-            window.location.href = 'index.html';
-            console.log('Selected Role: ' + role);
-          })
-          .catch(error => console.error('Error adding user to Firestore: ', error));
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+        // Register user
+        console.log("Saving user ...");
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Save user data to Firestore
+                db.collection('users').doc(email).set({
+                    email: email,
+                    role: role,
+                    userId: userCredential.user.uid
+                }) 
+                    .then(() => {
+                        alert('User registered successfully!');
+                        window.location.href = 'index.html';
+                        console.log('Selected Role: ' + role);
+                    })
+                    .catch(error => console.error('Error adding user to Firestore: ', error));
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
     }
-  });
+}
+
+// Attach the handleRegistration function to the click event of the Register button
+document.getElementById('registerButton').addEventListener('click', handleRegistration);

@@ -74,6 +74,12 @@ registrationForm.addEventListener('submit', handleRegistration);
 
 // create.js 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const nextButton = document.getElementById('nextButton');
+    nextButton.addEventListener('click', showRegistrationForm);
+});
+
+
 async function showRegistrationForm() {
     const selectedRole = document.querySelector('input[name="role"]:checked').value;
 
@@ -128,14 +134,14 @@ async function handleRegistration(event) {
         if (selectedRole === 'user') {
             await firestore.collection('users').doc(user.uid).set({
                 email: email,
-                role: selectedRole
+                role: selectedRole,
                 // Add other user data if needed
             });
         } else if (selectedRole === 'seller') {
             await firestore.collection('sellers').doc(user.uid).set({
                 email: email,
                 role: selectedRole,
-                verificationCode: verificationCode
+                verificationCode: verificationCode,
                 // Add other seller data if needed
             });
         }
@@ -155,3 +161,7 @@ async function handleRegistration(event) {
         }
     }
 }
+
+// Add event listener for registration form submission
+const registrationForm = document.getElementById('registrationForm');
+registrationForm.addEventListener('submit', handleRegistration);

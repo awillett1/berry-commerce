@@ -139,7 +139,6 @@ function showRegistrationForm() {
 // Add event listener to the Next button for role selection
 document.getElementById('nextButton').addEventListener('click', showRegistrationForm);
 
-// Function to handle registration
 async function handleRegistration(event) {
     event.preventDefault(); // Prevent form submission
 
@@ -148,65 +147,34 @@ async function handleRegistration(event) {
     const role = document.querySelector('input[name="role"]:checked').value; // Get the selected role
 
     try {
-        if (role === 'seller') {
-            // Only fetch and verify the verification code if the user is a seller
-            const verificationCode = document.getElementById('verificationCode').value;
+        // Create a new user with email/password
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        console.log('User registered successfully:', user.email);
 
-            // Fetch the verification code associated with the user's email from Firestore
-            const verificationSnapshot = await firebase.firestore()
-                .collection('verificationCodes')
-                .doc(email)
-                .get();
+        // Get a reference to the Firestore database
+        const firestore = firebase.firestore();
 
-            // Check if the verification code document exists and if the provided code matches
-            if (verificationSnapshot.exists && verificationSnapshot.data().code === verificationCode) {
-                // Proceed with user registration
-                const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-                console.log('User registered successfully:', user.email);
+        // Store user information in Firestore under the "users" collection
+        await firestore.collection('users').doc(user.uid).set({
+            email: email,
+            role: role
+        });
 
-                // Get a reference to the Firestore database
-                const firestore = firebase.firestore();
+        // Redirect the user to index.html or any other desired page upon successful registration
+        window.location.href = 'index.html';
+        alert('Registration successful! You can now log in with your new account.');
+        alert('Selected Role: ' + role);
 
-                // Store user information in Firestore under the "sellers" collection
-                await firestore.collection('sellers').doc(user.uid).set({
-                    email: email,
-                    role: role,
-                    code: verificationCode
-                });
-
-                // Redirect the user to index.html or any other desired page upon successful registration
-                window.location.href = 'index.html';
-                alert('Registration successful! You can now log in with your new account.');
-                alert('Selected Role: ' + role);
-            } else {
-                alert('Invalid verification code. Please try again.');
-            }
-        } else {
-            // Proceed with user registration directly if the user is not a seller
-            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-            console.log('User registered successfully:', user.email);
-
-            // Get a reference to the Firestore database
-            const firestore = firebase.firestore();
-
-            // Store user information in Firestore under the "users" collection
-            await firestore.collection('users').doc(user.uid).set({
-                email: email,
-                role: role
-            });
-
-            // Redirect the user to index.html or any other desired page upon successful registration
-            window.location.href = 'index.html';
-            alert('Registration successful! You can now log in with your new account.');
-            alert('Selected Role: ' + role);
-        }
     } catch (error) {
         console.error('Error registering user:', error.message);
-        // Add an alert to inform the user about the error
-        alert('Error registering user: ' + error.message);
+
+        // Check if the error is due to an existing email address
+        if (error.code === 'auth/email-already-in-use') {
+            alert('This email address is already in use. Please use a different email or log in.');
+        } else {
+            // Handle other registration errors
+            alert('Registration failed. Please try again.');
+        }
     }
 }
-
-

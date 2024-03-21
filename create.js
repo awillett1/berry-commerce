@@ -158,3 +158,9 @@ async function handleRegistration(event) {
       console.log('Registration failed. Please try again.');
     }
 }
+
+function showRegistrationForm() {
+    // Toggle the display of the registration section
+    document.getElementById('roleSelectionForm').style.display = 'none';
+    document.getElementById('registrationSection').style.display = 'block';
+}

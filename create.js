@@ -204,9 +204,13 @@ function showRegistrationForm() {
     // Show the appropriate registration section based on the selected role
     if (roleSelection === 'seller') {
         document.getElementById('registrationSection').style.display = 'block';
-        document.getElementById('verificationCode').parentNode.style.display = 'block'; // Show verification code field
+        document.getElementById('verificationCodeContainer').style.display = 'block'; // Show verification code field container
     } else {
         document.getElementById('roleSelectionSection').style.display = 'block';
-        document.getElementById('verificationCode').parentNode.style.display = 'none'; // Hide verification code field
+        document.getElementById('verificationCodeContainer').style.display = 'none'; // Hide verification code field container
     }
 }
+
+// Add event listener to the role selection form
+document.getElementById('roleSelectionForm').addEventListener('submit', showRegistrationForm);
+

@@ -42,5 +42,3 @@ function initFirebaseAndCheckRole() {
     }
 }
 
-// Call the function to initialize Firebase and check user's role
-initializeFirebase().then(initFirebaseAndCheckRole).catch(error => console.error('Error initializing Firebase:', error));

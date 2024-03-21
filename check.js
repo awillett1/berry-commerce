@@ -19,6 +19,7 @@ function initFirebaseAndCheckRole() {
                 var role = doc.data().role;
                 // Determine the current page's URL
                 var currentPage = window.location.pathname;
+                console.log("Current Page:", currentPage);
 
                 // Check if user is trying to access unauthorized pages
                 if ((role === "seller" && currentPage.includes("account.html")) ||

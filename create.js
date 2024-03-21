@@ -158,7 +158,8 @@ function showRegistrationForm() {
                 })
                 .then(() => {
                   alert('Seller registered successfully!');
-                  window.location.href = 'login.html';
+                  window.location.href = 'index.html';
+                  onsole.log('Selected Role: ' + role);
                 })
                 .catch(error => console.error('Error adding seller to Firestore: ', error));
               })
@@ -182,7 +183,8 @@ function showRegistrationForm() {
           })
           .then(() => {
             alert('User registered successfully!');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
+            console.log('Selected Role: ' + role);
           })
           .catch(error => console.error('Error adding user to Firestore: ', error));
         })

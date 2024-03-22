@@ -43,15 +43,7 @@
     <div class="popup">
         <h2>Enter your new email address.</h2>
         <input type="email" id="newEmail" placeholder="Email">
-        <button id="submitButton">Submit</button>
+        <button onclick="changeEmail()">Submit</button>
     </div>
 </body>
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('submitButton').addEventListener('click', function() {
-            changeEmail();
-        });
-    });
-</script>

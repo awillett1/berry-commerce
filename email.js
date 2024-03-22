@@ -1,5 +1,7 @@
+// email.js 
+
 // Function to handle email change
-function changeEmail() {
+async function changeEmail() {
   var newEmail = document.getElementById('newEmail').value;
   var user = firebase.auth().currentUser;
 
@@ -9,13 +11,13 @@ function changeEmail() {
           updateUserEmail(user.uid, newEmail)
               .then(function() {
                   console.log("User email updated successfully.");
-                  alert("Your email has been successfully updated. Your new email is", newEmail)
+                  alert("Your email has been successfully updated. Your new email is " + newEmail);
 
                   // Update email in 'sellers' collection
                   updateSellerEmail(user.uid, newEmail)
                       .then(function() {
-                        alert("Your email has been successfully updated. Your new email is", newEmail)
                           console.log("Seller email updated successfully.");
+                          alert("Your email has been successfully updated. Your new email is " + newEmail);
                       })
                       .catch(function(error) {
                           console.error("Error updating seller email:", error);
@@ -23,11 +25,11 @@ function changeEmail() {
               })
               .catch(function(error) {
                   console.error("Error updating user email:", error);
-                  alert("Your email was unable to be updated.")
+                  alert("Your email was unable to be updated.");
               });
       }).catch(function(error) {
           console.error("Error updating email:", error);
-          alert("Your email was unable to be updated.")
+          alert("Your email was unable to be updated.");
       });
   } else {
       console.error("No user signed in.");

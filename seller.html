@@ -38,6 +38,7 @@
         <script src="address.js" defer></script> <!-- Checks whether user is logged in or not... -->
         <script src="signoff.js"></script> <!-- Signs out user... -->
         <script src="check.js" defer></script> <!-- Restricts access to account/seller page -->
+        <script src="change.js"></script> <!-- Changes either password or email depending on user option.-->
          <!--test comment-->
 
         <!-- Template Stylesheet -->
@@ -175,24 +176,14 @@
                                 <form>
                                   <!-- Account Information Form -->
                                   <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" class="form-control" id="username" placeholder="Enter your username">
-                                  </div>
+                                    <h1>Email</h1>
+                                    <button id="changeEmail">Reset Email</button>   
+                                   </div>                             
                                   <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="confirmPassword">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+                                    <h1>Password</h1>
+                                    <button id="resetPass" onclick="openPassPopup()">Reset Password</button>   
                                   </div>
                                   <button type="submit" class="btn btn-primary">Save Changes</button>
-
-
                                 </form>
                             </div>
 
@@ -215,17 +206,6 @@
                                 <h4>Team Page</h4>
                                 <!-- Add content for team page here -->
                                 <p>Your team page content goes here.</p>
-                                <h4>Add User Account Access</h4>
-                                <p>Note: The user must already be signed up for a user account for our website. Use the email address they used to
-                                    sign up.
-                                </p>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="newEmail">Email</label>
-                                        <input type="email" class="form-control" id="newEmail" placeholder="Enter new email">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Add Account</button>
-                            </form>
                             </div>
                         </div>
                     </div>

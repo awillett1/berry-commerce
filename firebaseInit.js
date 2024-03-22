@@ -1,9 +1,6 @@
 // firebaseInit.js
 
 // Initialize Firebase
-// test comment
-
-
 async function initializeFirebase() {
     try {
         // Fetch Firebase configuration from the server

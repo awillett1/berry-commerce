@@ -132,3 +132,8 @@ async function handleLogin(event) {
         }
     }
 }
+
+function openPopup() {
+    window.open("popup.html", "Forgot Password", "width=400,height=300");
+}
+

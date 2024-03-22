@@ -257,30 +257,6 @@ async function showRegistrationForm() {
     }
 }
 
-// FORGOT PASSWORD HANDLING ---------
-
-// Attach an event listener to the "Forgot password?" link
-document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
-    event.preventDefault();
-
-    // Prompt the user to enter their email
-    const email = prompt("Please enter your email:");
-    if (email !== null) {
-        // Send a password reset email
-        sendForgotPasswordEmail(email);
-    }
-});
-
-// Function to send a password reset email using Firebase Authentication
-function sendForgotPasswordEmail(email) {
-    auth.sendPasswordResetEmail(email)
-        .then(() => {
-            // Password reset email sent.
-            alert('Password reset email sent!');
-        })
-        .catch((error) => {
-            // An error occurred.
-            console.error('An error occurred:', error.message);
-            alert('An error occurred: ' + error.message);
-        });
+function openPopup() {
+    window.open("popup.html", "Forgot Password", "width=400,height=300");
 }

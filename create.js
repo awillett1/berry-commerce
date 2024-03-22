@@ -257,6 +257,10 @@ async function showRegistrationForm() {
     }
 }
 
+// Add event listener to the registration form
+document.getElementById("registrationForm").addEventListener("submit", handleRegistration);
+
+
 function openPopup() {
     window.open("passRecover.html", "Forgot Password", "width=400,height=300");
 }

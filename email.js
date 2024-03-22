@@ -1,6 +1,6 @@
-// Function to reset email and update collections
+// Function to reset email and send verification email
 async function changeEmail() {
-    const newEmail = document.getElementById('email').value;
+    const newEmail = document.getElementById('newEmail').value;
     const user = firebase.auth().currentUser;
 
     try {

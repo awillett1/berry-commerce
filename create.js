@@ -258,5 +258,5 @@ async function showRegistrationForm() {
 }
 
 function openPopup() {
-    window.open("popup.html", "Forgot Password", "width=400,height=300");
+    window.open("passRecover.html", "Forgot Password", "width=400,height=300");
 }

@@ -37,6 +37,21 @@ async function changeEmail() {
     }
 }
 
+// Function to update email in 'users' collection
+async function updateUserEmail(userId, newEmail) {
+    return firebase.firestore().collection('users').doc(userId).update({
+        email: newEmail
+    });
+}
+
+// Function to update email in 'sellers' collection
+async function updateSellerEmail(userId, newEmail) {
+    return firebase.firestore().collection('sellers').doc(userId).update({
+        email: newEmail
+    });
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
     window.changeEmail = changeEmail;
 });

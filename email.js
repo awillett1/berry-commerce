@@ -1,8 +1,21 @@
+
+
 async function changeEmail() {
     var newEmail = document.getElementById('newEmail').value;
     var user = firebase.auth().currentUser;
 
     console.log("Current user:", user);
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            var userId = user.uid;
+            console.log("User ID:", userId);
+        } else {
+            // No user is signed in
+            console.error("No user signed in (inner loop)");
+        }
+    });
+    
 
     if (user) {
         user.updateEmail(newEmail).then(function() {

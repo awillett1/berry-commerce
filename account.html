@@ -42,7 +42,7 @@
         <script src="check.js" defer></script> <!-- Restricts access to account/seller page -->
         <script src="signoff.js"></script> <!-- Signs out user... -->
         <script src="change.js"></script> <!-- Changes either password or email depending on user option.-->
-        
+        <script src="email.js"></script> <!-- Changes either password or email depending on user option.-->
 
          <!--test comment-->
         
@@ -170,7 +170,8 @@
                                   <!-- Account Information Form -->
                                   <div class="form-group">
                                     <h1>Email</h1>
-                                    <button id="changeEmail" onclick="openEmailPopup()">Reset Email</button>   
+                                    <input type="email" id="newEmail" placeholder="Email">
+                                    <button onclick="changeEmail()">Submit</button> 
                                 </div>                             
                                   <div class="form-group">
                                     <h1>Password</h1>

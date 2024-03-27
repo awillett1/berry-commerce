@@ -11,7 +11,6 @@ async function changeEmail() {
             var userId = user.uid;
             console.log("User ID:", userId);
         } else {
-            // No user is signed in
             console.error("No user signed in (inner loop)");
         }
     });

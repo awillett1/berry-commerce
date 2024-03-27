@@ -564,3 +564,62 @@
 }
 
   /*** FAQ END ***/
+
+  /*** TEAM START ***/
+  /* Style for team box */
+.team-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+/* Style for team image */
+.team-img {
+    width: 150px; 
+    height: 150px; 
+    border-radius: 50%; 
+    margin-bottom: 15px;
+}
+
+/* Style for team name */
+.team-box h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Style for team description */
+.team-box p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Style for explore button */
+.team-box a.btn {
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.team-box a.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Style for page header */
+.page-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px 0;
+}
+
+/* Style for page title */
+.page-header h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+/* Center align text */
+.text-center {
+    text-align: center;
+}
+/*** TEAM END ***/

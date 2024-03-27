@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const etsy = document.getElementById('etsy').value;
   
       // Save team data to Firestore
-      db.collection("teams").add({
+      firebase.firestore().collection("teams").add({
         teamName: teamName,
         teamDescription: teamDescription,
         teamMembers: teamMembers,

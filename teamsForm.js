@@ -1,6 +1,7 @@
 // teamsForm
 
 // Function to handle form submission
+document.addEventListener('DOMContentLoaded', function() {
   function handleFormSubmission(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -46,3 +47,4 @@
   // Add event listener to the form for form submission
   // document.getElementById('teamForm').addEventListener('submit', handleFormSubmission);
   document.getElementById('submitButton').addEventListener('click', handleFormSubmission);
+});

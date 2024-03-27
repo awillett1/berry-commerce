@@ -39,7 +39,7 @@
         <script src="firebaseInit.js"></script>   <!-- Firebase initialization -->
         <script src="address.js" defer></script> <!-- Checks whether user is logged in or not... -->
         <script src="check.js" defer></script> <!-- Restricts access to account/seller page -->
-        <script src="teamsForm.js"></script> <!-- Fills in information for the teams page -->
+        <script src="teamsList.js"></script> <!-- Fills in information for the teams page -->
 
         <!--test comment-->
          <!--test comment-->
@@ -137,8 +137,13 @@
     </div>
 </div> -->
 
-<!-- Add this empty div in the teams.html file where the team section will be inserted -->
-<div id="teamSection"></div>
+<div class="container-fluid py-5">
+    <div class="container py-5 text-center">
+        <div class="row justify-content-center" id="teamsContainer">
+            <!-- Teams will be dynamically added here -->
+        </div>
+    </div>
+</div>
 
 <!-- Team Section End -->
 

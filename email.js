@@ -1,10 +1,13 @@
-// Function to handle email change
 async function changeEmail() {
     var newEmail = document.getElementById('newEmail').value;
     var user = firebase.auth().currentUser;
 
+    console.log("Current user:", user);
+
     if (user) {
         user.updateEmail(newEmail).then(function() {
+            console.log("Email update successful");
+
             // Update email in 'users' collection
             updateUserEmail(user.uid, newEmail)
                 .then(function() {

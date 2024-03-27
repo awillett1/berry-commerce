@@ -1,8 +1,5 @@
-// email.js 
-
 // Function to handle email change
-document.addEventListener('DOMContentLoaded', function() {
-  async function changeEmail() {
+async function changeEmail() {
     var newEmail = document.getElementById('newEmail').value;
     var user = firebase.auth().currentUser;
 
@@ -35,5 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("No user signed in.");
     }
-  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    window.changeEmail = changeEmail;
 });

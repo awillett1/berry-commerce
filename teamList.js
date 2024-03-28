@@ -1,5 +1,6 @@
 
   // Function to fetch teams data from Firestore and update the page
+  document.addEventListener('DOMContentLoaded', function() {
   function updateTeamsPage() {
     const teamsContainer = document.getElementById('teamsContainer');
 
@@ -25,16 +26,17 @@
               <a class="btn border-secondary rounded-pill py-2 px-4" href="home/teams.html/${teamName}.html">Explore</a>
             </div>
           </div>
-        `;
+          `;
 
-        // Append team card to teamsContainer
-        teamsContainer.innerHTML += teamCard;
+          // Append team card to teamsContainer
+          teamsContainer.innerHTML += teamCard;
       });
-    })
-    .catch((error) => {
+  })
+  .catch((error) => {
       console.error("Error fetching teams: ", error);
-    });
-  }
+  });
+}
 
-  // Call updateTeamsPage when the document is loaded
-  document.addEventListener('DOMContentLoaded', updateTeamsPage);
+// Call updateTeamsPage when the document is loaded
+document.addEventListener('DOMContentLoaded', updateTeamsPage);
+});

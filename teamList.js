@@ -13,8 +13,6 @@
       querySnapshot.forEach((doc) => {
         const teamData = doc.data();
         const teamName = teamData.teamName;
-        const teamDescription = teamData.teamDescription;
-        // Add other fields here as needed
 
         // Create team card HTML
         const teamCard = `
@@ -22,7 +20,6 @@
             <div class="team-box border rounded p-4 mb-4">
               <img src="img/avatar.jpg" alt="${teamName}" class="team-img mb-3">
               <h2 class="mb-3">${teamName}</h2>
-              <p class="mb-4">${teamDescription}</p>
               <a class="btn border-secondary rounded-pill py-2 px-4" href="home/teams.html/${teamName}.html">Explore</a>
             </div>
           </div>

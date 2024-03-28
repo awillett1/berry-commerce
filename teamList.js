@@ -1,3 +1,17 @@
+// Wait for the DOM content to be loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Call the updateTeamsPage function when Firebase is ready
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          // User is authenticated, call updateTeamsPage
+          updateTeamsPage();
+      } else {
+          // User is not authenticated, handle accordingly
+          console.error('User is not authenticated.');
+      }
+  });
+});
+
 // Function to fetch teams data from Firestore and update the page
 async function updateTeamsPage() {
   const teamsContainer = document.getElementById('teamsContainer');

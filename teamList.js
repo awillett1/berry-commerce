@@ -1,14 +1,3 @@
-// Wait for Firebase authentication to be ready
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-      // User is authenticated, call updateTeamsPage
-      updateTeamsPage();
-  } else {
-      // User is not authenticated, handle accordingly
-      console.error('User is not authenticated.');
-  }
-});
-
 // Function to fetch teams data from Firestore and update the page
 function updateTeamsPage() {
   const teamsContainer = document.getElementById('teamsContainer');
@@ -53,3 +42,17 @@ function updateTeamsPage() {
       teamsContainer.innerHTML = '<p>Error fetching teams. Please try again later.</p>';
   });
 }
+
+// Wait for the DOM content to be loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait for Firebase authentication to be ready
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          // User is authenticated, call updateTeamsPage
+          updateTeamsPage();
+      } else {
+          // User is not authenticated, handle accordingly
+          console.error('User is not authenticated.');
+      }
+  });
+});

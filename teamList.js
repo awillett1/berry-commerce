@@ -37,7 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       })
       .catch((error) => {
+          // Log and handle errors
           console.error("Error fetching teams: ", error);
+          // Display an error message on the page
+          teamsContainer.innerHTML = '<p>Error fetching teams. Please try again later.</p>';
       });
   }
 

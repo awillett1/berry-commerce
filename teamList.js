@@ -1,5 +1,5 @@
 // Function to fetch teams data from Firestore and update the page
-function updateTeamsPage() {
+async function updateTeamsPage() {
   const teamsContainer = document.getElementById('teamsContainer');
   
   // Log to indicate that the function is called
@@ -45,14 +45,6 @@ function updateTeamsPage() {
 
 // Wait for the DOM content to be loaded
 document.addEventListener('DOMContentLoaded', function() {
-  // Wait for Firebase authentication to be ready
-  firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-          // User is authenticated, call updateTeamsPage
-          updateTeamsPage();
-      } else {
-          // User is not authenticated, handle accordingly
-          console.error('User is not authenticated.');
-      }
-  });
+  // Call the updateTeamsPage function when the document is loaded
+  updateTeamsPage();
 });

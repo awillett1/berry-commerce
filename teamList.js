@@ -43,8 +43,4 @@ document.addEventListener('DOMContentLoaded', function() {
           teamsContainer.innerHTML = '<p>Error fetching teams. Please try again later.</p>';
       });
   }
-
-  // Call updateTeamsPage when the document is loaded
-  console.log('Document loaded. Calling updateTeamsPage...');
-  document.addEventListener('DOMContentLoaded', updateTeamsPage);
 });

@@ -4,7 +4,7 @@
 async function initializeFirebase() {
     try {
         // Fetch Firebase configuration from the server
-        const response = await fetch('https://berry-commerce-default-rtdb.firebaseio.com/appConfigurations/firebaseConfig.json');
+        const response = await fetch('x');
         const firebaseConfig = await response.json();
 
         // Initialize Firebase with the fetched configuration
